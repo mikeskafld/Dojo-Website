@@ -26,12 +26,20 @@ const heroContent = {
   },
 }
 
-const socialProofStats = [
-  { value: "70%", label: "Creator Revenue Share", icon: TrendingUp },
-  { value: "3min", label: "Average Lesson Time", icon: BookOpen },
-  { value: "10K+", label: "Creators Interested", icon: Users },
-  { value: "AI", label: "Powered Scaffolding", icon: Sparkles },
-]
+const socialProofStats = {
+  creator: [
+    { value: "70%", label: "Revenue Share", icon: TrendingUp },
+    { value: "10K+", label: "Creators Interested", icon: Users },
+    { value: "Monthly", label: "Payout Schedule", icon: BookOpen },
+    { value: "AI", label: "Lesson Structuring", icon: Sparkles },
+  ],
+  learner: [
+    { value: "5min", label: "Average Lesson", icon: BookOpen },
+    { value: "100+", label: "Topics Available", icon: Users },
+    { value: "3x", label: "Better Retention", icon: TrendingUp },
+    { value: "AI", label: "Personalized Paths", icon: Sparkles },
+  ],
+}
 
 export function LandingHeroSection() {
   const searchParams = useSearchParams()
@@ -215,34 +223,43 @@ export function LandingHeroSection() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="mt-16 md:mt-24"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
-            {socialProofStats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
-                whileHover={{
-                  y: -4,
-                  transition: { duration: 0.2 }
-                }}
-                className="group relative p-4 md:p-6 rounded-xl dojo-card"
-              >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 dojo-glow-subtle" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={audience}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
+            >
+              {socialProofStats[audience].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  whileHover={{
+                    y: -4,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="group relative p-4 md:p-6 rounded-xl dojo-card"
+                >
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 dojo-glow-subtle" />
 
-                <div className="relative flex flex-col items-center text-center space-y-2">
-                  <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-[var(--dojo-cyan)] mb-1" />
-                  <span className="text-2xl md:text-3xl font-bold text-[var(--dojo-cyan)]">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs md:text-sm text-[var(--dojo-text-muted)]">
-                    {stat.label}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <div className="relative flex flex-col items-center text-center space-y-2">
+                    <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-[var(--dojo-cyan)] mb-1" />
+                    <span className="text-2xl md:text-3xl font-bold text-[var(--dojo-cyan)]">
+                      {stat.value}
+                    </span>
+                    <span className="text-xs md:text-sm text-[var(--dojo-text-muted)]">
+                      {stat.label}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

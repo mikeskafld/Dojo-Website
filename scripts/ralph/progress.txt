@@ -102,3 +102,19 @@ Started: Sat Jan 31 10:39:57 PST 2026
   - Create new URLSearchParams from existing params to preserve other query strings
   - useEffect syncs state when URL changes externally (browser back/forward)
 ---
+
+## 2026-01-31 13:30 - US-008
+- What was implemented: Dynamic stats section in hero based on audience mode
+- Files changed:
+  - `app/(marketing)/marketing-hero.tsx`: Made socialProofStats an object with creator/learner arrays
+- **Implementation details:**
+  - Hero already had dynamic headline, subheadline, and CTA per mode
+  - Made socialProofStats object with creator/learner keys
+  - Creator stats: 70% Revenue Share, 10K+ Creators Interested, Monthly Payout Schedule, AI Lesson Structuring
+  - Learner stats: 5min Average Lesson, 100+ Topics Available, 3x Better Retention, AI Personalized Paths
+  - Added AnimatePresence wrapper for smooth stat transitions
+- **Learnings for future iterations:**
+  - Convert arrays to objects with mode keys for mode-dependent data: `{ creator: [...], learner: [...] }`
+  - Wrap mode-dependent content in AnimatePresence for smooth transitions
+  - Use `key={audience}` on motion.div to trigger exit/enter animations
+---
