@@ -238,8 +238,8 @@
         "Typecheck passes"
       ],
       "priority": 14,
-      "passes": false,
-      "notes": "This can be done anytime but should be ready before forms are connected"
+      "passes": true,
+      "notes": "Tables were already created in migrations 20260130100000_creator_applications.sql and 20260130110000_learner_waitlist.sql during US-007 and US-008. All acceptance criteria verified."
     },
     {
       "id": "US-015",

@@ -339,3 +339,22 @@
   - Browser verification blocked by missing Supabase env vars (site-wide issue)
 
 ---
+
+## 2026-01-30 - US-014: Create Supabase tables for form submissions
+- **Status**: Completed (verified - tables already exist)
+- **Files verified**:
+  - supabase/migrations/20260130100000_creator_applications.sql
+  - supabase/migrations/20260130110000_learner_waitlist.sql
+- **What was verified**:
+  - creator_applications table: id (uuid), created_at, name, email, niche, social_link, audience_size, status (enum)
+  - learner_waitlist table: id (uuid), created_at, email, name, interests (text[])
+  - Both tables have `email text not null unique` constraint
+  - Both tables have RLS enabled with `with check (true)` policies for anonymous inserts
+  - Indexes on email and created_at columns
+  - Typecheck passes
+- **Learnings for future iterations**:
+  - This story was essentially documentation/verification - the work was done in US-007 and US-008
+  - Future PRDs should link dependent stories or mark as "completed by" when work is done elsewhere
+  - When creating forms, create the table migration in the same story to avoid orphaned verification stories
+
+---
