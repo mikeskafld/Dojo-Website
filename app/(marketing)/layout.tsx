@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import { MarketingFooter } from "@/app/(marketing)/marketing-footer"
 import { SiteHeader } from "@/app/(marketing)/marketing-header"
+import { SmoothScroll } from "@/components/smooth-scroll"
 
 export const metadata: Metadata = {
   title: "Dojo - Master Any Skill",
@@ -15,6 +16,7 @@ export default function MarketingLayout({
 }>) {
   return (
     <main className="dojo min-h-screen bg-background">
+      <SmoothScroll />
       <SiteHeader />
       <div className="container mx-auto max-w-7xl pt-1 md:pt-1 px-1">
         {children}

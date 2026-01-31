@@ -380,21 +380,43 @@
     box-shadow: var(--dojo-glow-subtle);
   }
 
-  /* Dojo button primary (cyan) */
+  /* Enhanced Dojo button primary (cyan) with glow */
   .dojo-btn-primary {
+    position: relative;
     background-color: var(--dojo-cyan);
     color: var(--dojo-bg);
     font-weight: 600;
     transition: all 0.2s ease;
+    overflow: hidden;
+  }
+
+  .dojo-btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
   }
 
   .dojo-btn-primary:hover {
     background-color: var(--dojo-cyan-light);
-    box-shadow: var(--dojo-glow);
+    box-shadow: var(--dojo-glow), 0 4px 20px rgba(0, 212, 255, 0.4);
+    transform: translateY(-1px);
   }
 
-  /* Dojo button secondary (outline) */
+  .dojo-btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .dojo-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--dojo-glow-subtle);
+  }
+
+  /* Enhanced Dojo button secondary (outline) with glow */
   .dojo-btn-secondary {
+    position: relative;
     background-color: transparent;
     color: var(--dojo-text);
     border: 1px solid var(--dojo-border);
@@ -404,6 +426,13 @@
   .dojo-btn-secondary:hover {
     border-color: var(--dojo-cyan);
     color: var(--dojo-cyan);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .dojo-btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: none;
   }
 
   /* Dojo text gradient effect */
@@ -429,5 +458,42 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--dojo-cyan), transparent);
     opacity: 0.5;
+  }
+
+  /* =============================================================================
+     PREFERS-REDUCED-MOTION SUPPORT
+     Respects user's preference for reduced motion
+     ============================================================================= */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .dojo-card,
+    .dojo-btn-primary,
+    .dojo-btn-secondary {
+      transition: none;
+    }
+
+    .dojo-btn-primary:hover,
+    .dojo-btn-secondary:hover {
+      transform: none;
+    }
+  }
+
+  /* Smooth scroll behavior for anchor links (respects reduced-motion) */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
