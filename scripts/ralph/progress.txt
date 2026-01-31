@@ -10,6 +10,9 @@
 - Dojo design system: Use CSS vars (--dojo-cyan, --dojo-bg) and utility classes (dojo-card, dojo-btn-primary)
 - Animation patterns: layoutId for toggle animations, AnimatePresence mode="wait" for content swaps
 - Use GlowEffect and Magnetic components from /components/ for interactive buttons
+- Form submissions: Use server actions in lib/db/actions.ts with exported types (e.g., FormData, Result types)
+- Supabase RLS for anonymous inserts: Use `with check (true)` policy
+- No shadcn Select component - use native select with custom styling matching Input component
 
 ---
 
@@ -154,5 +157,32 @@
   - Use &ldquo; and &rdquo; for proper curly quotes in JSX
   - ArrowRight with text in a divider pattern: flex-1 h-px + icon + text + flex-1 h-px
   - Consistent card pattern from DojoFeaturesSection works well across sections
+
+---
+
+## 2026-01-30 - US-007: Build creator application form section
+- **Status**: Completed
+- **Files**:
+  - app/(marketing)/creator-application-section.tsx (new)
+  - lib/db/actions.ts (updated - added submitCreatorApplication action)
+  - supabase/migrations/20260130100000_creator_applications.sql (new)
+  - app/(marketing)/page.tsx (updated import)
+- **What was implemented**:
+  - Created CreatorApplicationSection component with full form
+  - Form fields: Full Name, Email, Content Niche (dropdown), Social Profile Link, Monthly Audience Size
+  - Client-side validation with error states per field
+  - Server action submitCreatorApplication with email validation and duplicate check
+  - Success state with animated transition and CheckCircle icon
+  - Error state with banner showing error message
+  - Supabase migration creates creator_applications table with RLS policy for anonymous inserts
+  - Section added to homepage after WhyDojoSection
+- **Learnings for future iterations**:
+  - Use native select element with custom styling (no shadcn Select component in codebase)
+  - selectStyles constant for consistent select styling matching Input component
+  - Form state machine pattern: "idle" | "submitting" | "success" | "error"
+  - AnimatePresence mode="wait" for smooth form/success state transitions
+  - Server action types exported alongside functions: CreatorApplicationFormData, CreatorApplicationResult
+  - RLS policy for anonymous inserts: `with check (true)` allows any insert
+  - Supabase error code "23505" indicates unique constraint violation (duplicate email)
 
 ---
