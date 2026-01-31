@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import { getURL } from "@/lib/utils"
 import { FadeIn } from "@/components/fade-in"
 import { DojoFeaturesSection } from "@/app/(marketing)/dojo-features"
+import { HowItWorksSection } from "@/app/(marketing)/how-it-works-section"
 import { LandingHeroSection } from "@/app/(marketing)/marketing-hero"
 
 import { MarketingCTA } from "./marketing-cta"
@@ -65,6 +66,9 @@ export default async function LandingPage() {
       </FadeIn>
       <FadeIn>
         <DojoFeaturesSection />
+      </FadeIn>
+      <FadeIn>
+        <HowItWorksSection />
       </FadeIn>
       <FadeIn>
         <MarketingQuote />
