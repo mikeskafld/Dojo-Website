@@ -90,9 +90,9 @@ export default function ForLearnersPage() {
         <div className="absolute inset-0 dojo-gradient-hero" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] dojo-gradient-radial opacity-50" />
 
-        {/* Subtle animated glow orbs */}
+        {/* Subtle animated glow orbs - hidden on mobile to prevent overflow */}
         <motion.div
-          className="absolute top-20 right-[15%] w-64 h-64 rounded-full opacity-20"
+          className="absolute top-20 right-[15%] w-64 h-64 rounded-full opacity-20 hidden md:block"
           style={{
             background:
               "radial-gradient(circle, var(--dojo-cyan) 0%, transparent 70%)",
@@ -108,7 +108,7 @@ export default function ForLearnersPage() {
           }}
         />
         <motion.div
-          className="absolute bottom-32 left-[10%] w-48 h-48 rounded-full opacity-15"
+          className="absolute bottom-32 left-[10%] w-48 h-48 rounded-full opacity-15 hidden md:block"
           style={{
             background:
               "radial-gradient(circle, var(--dojo-cyan) 0%, transparent 70%)",

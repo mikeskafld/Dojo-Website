@@ -58,7 +58,7 @@ export function MarketingFooter() {
   return (
     <footer className="py-1 md:pt-4">
       <SectionCard className="container mx-auto max-w-7xl">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
           {/* Brand Section */}
           <div className="col-span-2 space-y-4">
             <GradientHeading size="lg" weight="base">

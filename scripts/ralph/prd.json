@@ -256,8 +256,8 @@
         "Verify in browser"
       ],
       "priority": 15,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Created PageTransition component for route change animations, SmoothScroll component for anchor links with header offset. Enhanced dojo-btn-primary and dojo-btn-secondary with glow effects and translateY hover. Added comprehensive prefers-reduced-motion CSS media query. Scroll-triggered animations already existed via FadeIn component. Card hover glow already existed in dojo-card utility class."
     },
     {
       "id": "US-016",
@@ -273,8 +273,8 @@
         "Verify in browser at multiple viewport sizes"
       ],
       "priority": 16,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Updated button.tsx and input.tsx to meet 44px touch target minimum. Fixed glow orb overflow on mobile by hiding on small screens (hidden md:block). Improved footer grid for 320px screens (grid-cols-1 sm:grid-cols-2). Updated interest toggle buttons and select inputs for proper touch targets. All responsive classes already existed throughout marketing pages. TypeScript and ESLint pass."
     },
     {
       "id": "US-017",

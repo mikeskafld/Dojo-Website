@@ -282,7 +282,7 @@ export function LearnerWaitlistSection() {
                             type="button"
                             disabled={formState === "submitting"}
                             onClick={() => handleInterestToggle(interest.value)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
+                            className={`min-h-[44px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 border ${
                               isSelected
                                 ? "bg-[var(--dojo-cyan)] text-[var(--dojo-bg)] border-[var(--dojo-cyan)]"
                                 : "bg-transparent text-[var(--dojo-text-muted)] border-[var(--dojo-border)] hover:border-[var(--dojo-cyan)] hover:text-[var(--dojo-text)]"

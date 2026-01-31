@@ -358,3 +358,78 @@
   - When creating forms, create the table migration in the same story to avoid orphaned verification stories
 
 ---
+
+## 2026-01-30 - US-015: Add page transitions and micro-interactions
+- **Status**: Completed
+- **Files**:
+  - components/page-transition.tsx (new)
+  - components/smooth-scroll.tsx (new)
+  - app/globals.css (updated)
+  - app/(marketing)/layout.tsx (updated)
+- **What was implemented**:
+  - Created PageTransition component with AnimatePresence for route change animations
+    - Fade-in/out with subtle y-axis movement
+    - Uses useReducedMotion hook to respect user preferences
+  - Created SmoothScroll component for anchor link smooth scrolling
+    - 80px header offset for sticky navbar
+    - Updates browser history without triggering scroll
+    - Uses native scrollTo with smooth/auto behavior based on motion preference
+  - Enhanced dojo-btn-primary CSS:
+    - Added ::before pseudo-element for subtle shine overlay on hover
+    - Added translateY(-1px) lift effect on hover
+    - Enhanced glow shadow on hover: box-shadow with 20px + 4px layers
+    - Added active state with translateY(0) for press feedback
+  - Enhanced dojo-btn-secondary CSS:
+    - Added cyan glow shadow on hover
+    - Added translateY(-1px) lift effect on hover
+    - Added active state for press feedback
+  - Added comprehensive prefers-reduced-motion CSS:
+    - Disables all animations and transitions globally
+    - Removes transform effects from buttons
+    - Sets scroll-behavior to auto
+  - Added smooth scroll behavior to html element with prefers-reduced-motion fallback
+  - Integrated SmoothScroll component into marketing layout
+- **Learnings for future iterations**:
+  - Existing FadeIn component already handles scroll-triggered section animations with useReducedMotion
+  - Existing dojo-card class already has hover glow effects
+  - PageTransition uses usePathname as key for AnimatePresence route detection
+  - SmoothScroll uses event delegation on document for all anchor links
+  - CSS prefers-reduced-motion should be comprehensive: cover *, ::before, ::after plus specific class overrides
+  - Button hover glow pattern: combine box-shadow with translateY for depth effect
+
+---
+
+## 2026-01-30 - US-016: Implement responsive design across all pages
+- **Status**: Completed
+- **Files**:
+  - components/ui/button.tsx (updated)
+  - components/ui/input.tsx (updated)
+  - app/(marketing)/creator-application-section.tsx (updated)
+  - app/(marketing)/learner-waitlist-section.tsx (updated)
+  - app/(marketing)/marketing-hero.tsx (updated)
+  - app/(marketing)/marketing-footer.tsx (updated)
+  - app/(marketing)/for-creators/page.tsx (updated)
+  - app/(marketing)/for-learners/page.tsx (updated)
+  - app/(marketing)/how-it-works/page.tsx (updated)
+  - app/(marketing)/about/page.tsx (updated)
+- **What was implemented**:
+  - Updated button.tsx touch targets: h-9→h-10 (default), h-8→h-9 (sm), h-10→h-11 (lg), size-9→size-10 (icon)
+  - Updated input.tsx touch target: h-9→h-11 for proper 44px minimum height
+  - Updated select styles in creator-application-section.tsx: h-9→h-11
+  - Updated interest toggle buttons in learner-waitlist-section.tsx: added min-h-[44px] and py-2.5 padding
+  - Fixed glow orb overflow on mobile: added `hidden md:block` to all animated glow orbs across:
+    - marketing-hero.tsx (2 orbs)
+    - for-creators/page.tsx (2 orbs)
+    - for-learners/page.tsx (2 orbs)
+    - how-it-works/page.tsx (1 orb)
+    - about/page.tsx (1 orb)
+  - Updated footer grid for 320px screens: changed grid-cols-2 to grid-cols-1 sm:grid-cols-2
+  - TypeScript and ESLint pass (pre-existing warnings in unrelated dashboard components)
+- **Learnings for future iterations**:
+  - 44px minimum touch target is WCAG AA requirement - always use h-10/h-11 for interactive elements
+  - Absolutely positioned elements with percentage-based positions (right-[15%], left-[10%]) can cause horizontal overflow on mobile - hide with `hidden md:block`
+  - Footer grid on 320px screens needs grid-cols-1 to prevent text truncation
+  - Pre-existing SSR issue with localStorage.getItem prevents browser verification - not related to CSS changes
+  - Responsive classes already present throughout marketing pages: sm:, md:, lg: breakpoints used correctly
+
+---
