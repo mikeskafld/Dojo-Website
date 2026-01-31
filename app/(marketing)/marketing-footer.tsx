@@ -9,26 +9,24 @@ import { SectionCard } from "@/components/section-card"
 
 const footerConfig = {
   brand: {
-    name: "Vibe Marketing",
-    description: "Elevate your brand with our AI-powered marketing platform.",
+    name: "dojo",
+    description: "The first marketplace powered by cognitive scaffolding. Master any skill, one swipe at a time.",
   },
   quickLinks: {
-    title: "Quick Links",
+    title: "Product",
     links: [
-      { text: "Features", href: "/" },
-      { text: "Pricing", href: "/pricing" },
-      { text: "Sign In", href: "/auth/login" },
-      { text: "Sign Up", href: "/auth/sign-up" },
-      { text: "Forgot Password", href: "/auth/forgot-password" },
+      { text: "How It Works", href: "/how-it-works" },
+      { text: "For Creators", href: "/for-creators" },
+      { text: "For Learners", href: "/for-learners" },
     ],
   },
   resources: {
-    title: "Resources",
+    title: "Company",
     links: [
-      { text: "Blog", href: "/blog" },
-      { text: "Documentation", href: "/docs" },
-      { text: "Terms", href: "/terms" },
       { text: "About", href: "/about" },
+      { text: "Blog", href: "/blog" },
+      { text: "Terms", href: "/terms" },
+      { text: "Login", href: "/auth/login" },
     ],
   },
   social: {
@@ -36,7 +34,7 @@ const footerConfig = {
     links: [
       {
         icon: Twitter,
-        href: "https://twitter.com",
+        href: "https://twitter.com/joindojo",
         label: "Twitter",
       },
       {
@@ -47,7 +45,7 @@ const footerConfig = {
     ],
   },
   copyright: {
-    text: "Vibe Marketing",
+    text: "Dojo",
   },
 } as const
 

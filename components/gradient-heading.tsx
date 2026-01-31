@@ -19,6 +19,9 @@ const headingVariants = cva(
         pink: "bg-gradient-to-t from-[#d619d6] via-[#fb21ff] to-[#ff8bff] dark:from-[#fb21ff] dark:to-[#fd67ff]",
 
         blue: "bg-gradient-to-t from-[hsl(var(--chart-5))] to-[hsl(var(--chart-5))/80] dark:from-[hsl(var(--chart-5))] dark:to-[hsl(var(--chart-5))/90]",
+
+        // Dojo cyan gradient variant
+        dojo: "bg-gradient-to-t from-[var(--dojo-cyan)] via-[var(--dojo-cyan-light)] to-white/90",
         light:
           "bg-gradient-to-t from-neutral-200 to-neutral-300 dark:from-neutral-300 dark:to-neutral-400",
         lightTwo:

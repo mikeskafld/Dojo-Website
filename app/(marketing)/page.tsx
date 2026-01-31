@@ -13,25 +13,25 @@ import { MarketingQuote } from "./marketing-quote"
 import { MarketingTestimonial } from "./marketing-testimonial"
 
 const ogImage = `${getURL()}og?title=${encodeURIComponent(
-  "Cult Pro Polar Starter"
+  "Dojo - Master Any Skill"
 )}`
 
 export const metadata: Metadata = {
-  title: "Cult Pro Polar Starter - Modern Web Development Template",
+  title: "Dojo - The First Marketplace Powered By Cognitive Scaffolding",
   description:
-    "Build scalable web applications faster with Cult Pro Polar Starter. Features Next.js, Supabase, Tailwind CSS, and modern authentication out of the box.",
+    "Turn your expertise into income or master any skill in minutes a day. Dojo transforms long-form content into bite-sized micro-lessons using AI-powered cognitive scaffolding.",
   keywords: [
-    "Next.js",
-    "Supabase",
-    "Web Development",
-    "Starter Template",
-    "React",
-    "Tailwind CSS",
+    "micro-learning",
+    "online courses",
+    "skill development",
+    "creator economy",
+    "AI learning",
+    "cognitive scaffolding",
   ],
   openGraph: {
-    title: "Cult Pro Polar Starter - Modern Web Development Template",
+    title: "Dojo - The First Marketplace Powered By Cognitive Scaffolding",
     description:
-      "Build scalable web applications faster with Cult Pro Polar Starter. Features Next.js, Supabase, Tailwind CSS, and modern authentication out of the box.",
+      "Turn your expertise into income or master any skill in minutes a day. Dojo transforms long-form content into bite-sized micro-lessons.",
     type: "website",
     locale: "en_US",
     images: [
@@ -39,15 +39,15 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Cult Pro Polar Starter Template",
+        alt: "Dojo - Master Any Skill",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cult Pro Polar Starter - Modern Web Development Template",
+    title: "Dojo - The First Marketplace Powered By Cognitive Scaffolding",
     description:
-      "Build scalable web applications faster with Cult Pro Polar Starter. Features Next.js, Supabase, Tailwind CSS, and modern authentication out of the box.",
+      "Turn your expertise into income or master any skill in minutes a day.",
     images: [ogImage],
   },
   robots: {

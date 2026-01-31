@@ -4,8 +4,8 @@ import { MarketingFooter } from "@/app/(marketing)/marketing-footer"
 import { SiteHeader } from "@/app/(marketing)/marketing-header"
 
 export const metadata: Metadata = {
-  title: "Cult Pro Polar Starter",
-  description: "Cult Pro Polar Starter",
+  title: "Dojo - Master Any Skill",
+  description: "The first marketplace powered by cognitive scaffolding. Turn your expertise into income or master any skill in minutes a day.",
 }
 
 export default function MarketingLayout({
@@ -14,7 +14,7 @@ export default function MarketingLayout({
   children: React.ReactNode
 }>) {
   return (
-    <main className="bg-black md:bg-background ">
+    <main className="dojo min-h-screen bg-background">
       <SiteHeader />
       <div className="container mx-auto max-w-7xl pt-1 md:pt-1 px-1">
         {children}

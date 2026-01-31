@@ -73,6 +73,20 @@
     0px 0.5px 1px rgba(255, 255, 255, 0.03) inset,
     0px 0px 0px 1px rgba(255, 255, 255, 0.02) inset,
     0px -1px 2px rgba(0, 0, 0, 0.1) inset;
+
+  /* Dojo Design System Colors */
+  --color-dojo-bg: var(--dojo-bg);
+  --color-dojo-bg-elevated: var(--dojo-bg-elevated);
+  --color-dojo-cyan: var(--dojo-cyan);
+  --color-dojo-cyan-light: var(--dojo-cyan-light);
+  --color-dojo-cyan-dark: var(--dojo-cyan-dark);
+  --color-dojo-text: var(--dojo-text);
+  --color-dojo-text-muted: var(--dojo-text-muted);
+  --color-dojo-border: var(--dojo-border);
+
+  /* Dojo Glow Effects */
+  --shadow-dojo-glow: var(--dojo-glow);
+  --shadow-dojo-glow-lg: var(--dojo-glow-lg);
 }
 
 :root {
@@ -148,6 +162,82 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* =============================================================================
+   DOJO DESIGN SYSTEM
+   Dark theme with cyan/teal accents for Dojo marketing site
+   ============================================================================= */
+
+/* Dojo base variables - always available */
+:root {
+  /* Dojo Background Colors - Deep dark theme */
+  --dojo-bg: #0a0a0a;
+  --dojo-bg-elevated: #111111;
+  --dojo-bg-card: #161616;
+  --dojo-bg-hover: #1a1a1a;
+
+  /* Dojo Cyan/Teal Accent Colors */
+  --dojo-cyan: #00d4ff;
+  --dojo-cyan-light: #22d3ee;
+  --dojo-cyan-dark: #0891b2;
+  --dojo-cyan-muted: #164e63;
+
+  /* Dojo Text Colors */
+  --dojo-text: #fafafa;
+  --dojo-text-muted: #a1a1aa;
+  --dojo-text-subtle: #71717a;
+
+  /* Dojo Border Colors */
+  --dojo-border: rgba(255, 255, 255, 0.1);
+  --dojo-border-hover: rgba(0, 212, 255, 0.3);
+  --dojo-border-accent: rgba(0, 212, 255, 0.5);
+
+  /* Dojo Glow Effects */
+  --dojo-glow: 0 0 20px rgba(0, 212, 255, 0.3);
+  --dojo-glow-lg: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2);
+  --dojo-glow-subtle: 0 0 10px rgba(0, 212, 255, 0.15);
+
+  /* Dojo Gradient Backgrounds */
+  --dojo-gradient-radial: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+  --dojo-gradient-hero: radial-gradient(ellipse at top, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Dojo theme class - applies dark theme with cyan accents */
+.dojo {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #161616;
+  --card-foreground: #fafafa;
+  --popover: #161616;
+  --popover-foreground: #fafafa;
+  --primary: #00d4ff;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a1a1aa;
+  --accent: #164e63;
+  --accent-foreground: #22d3ee;
+  --destructive: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #00d4ff;
+  --chart-1: #00d4ff;
+  --chart-2: #22d3ee;
+  --chart-3: #0891b2;
+  --chart-4: #06b6d4;
+  --chart-5: #67e8f9;
+  --sidebar: #111111;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #164e63;
+  --sidebar-accent-foreground: #22d3ee;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #00d4ff;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -215,5 +305,129 @@
   .pixel-hover-transition {
     transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
     transition-delay: 75ms;
+  }
+
+  /* =============================================================================
+     DOJO UTILITY CLASSES
+     ============================================================================= */
+
+  /* Dojo background utilities */
+  .dojo-bg {
+    background-color: var(--dojo-bg);
+  }
+
+  .dojo-bg-elevated {
+    background-color: var(--dojo-bg-elevated);
+  }
+
+  .dojo-bg-card {
+    background-color: var(--dojo-bg-card);
+  }
+
+  /* Dojo text utilities */
+  .dojo-text {
+    color: var(--dojo-text);
+  }
+
+  .dojo-text-muted {
+    color: var(--dojo-text-muted);
+  }
+
+  .dojo-text-cyan {
+    color: var(--dojo-cyan);
+  }
+
+  /* Dojo border utilities */
+  .dojo-border {
+    border-color: var(--dojo-border);
+  }
+
+  .dojo-border-cyan {
+    border-color: var(--dojo-border-accent);
+  }
+
+  /* Dojo glow effects */
+  .dojo-glow {
+    box-shadow: var(--dojo-glow);
+  }
+
+  .dojo-glow-lg {
+    box-shadow: var(--dojo-glow-lg);
+  }
+
+  .dojo-glow-subtle {
+    box-shadow: var(--dojo-glow-subtle);
+  }
+
+  /* Dojo gradient backgrounds */
+  .dojo-gradient-hero {
+    background-image: var(--dojo-gradient-hero);
+  }
+
+  .dojo-gradient-radial {
+    background-image: var(--dojo-gradient-radial);
+  }
+
+  /* Dojo card with hover glow effect */
+  .dojo-card {
+    background-color: var(--dojo-bg-card);
+    border: 1px solid var(--dojo-border);
+    transition: all 0.3s ease;
+  }
+
+  .dojo-card:hover {
+    border-color: var(--dojo-border-hover);
+    box-shadow: var(--dojo-glow-subtle);
+  }
+
+  /* Dojo button primary (cyan) */
+  .dojo-btn-primary {
+    background-color: var(--dojo-cyan);
+    color: var(--dojo-bg);
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .dojo-btn-primary:hover {
+    background-color: var(--dojo-cyan-light);
+    box-shadow: var(--dojo-glow);
+  }
+
+  /* Dojo button secondary (outline) */
+  .dojo-btn-secondary {
+    background-color: transparent;
+    color: var(--dojo-text);
+    border: 1px solid var(--dojo-border);
+    transition: all 0.2s ease;
+  }
+
+  .dojo-btn-secondary:hover {
+    border-color: var(--dojo-cyan);
+    color: var(--dojo-cyan);
+  }
+
+  /* Dojo text gradient effect */
+  .dojo-text-gradient {
+    background: linear-gradient(135deg, var(--dojo-cyan) 0%, var(--dojo-cyan-light) 50%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Dojo section with subtle top glow */
+  .dojo-section-glow {
+    position: relative;
+  }
+
+  .dojo-section-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--dojo-cyan), transparent);
+    opacity: 0.5;
   }
 }
