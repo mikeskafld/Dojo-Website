@@ -30,6 +30,7 @@ export function MainNav({ session }: MainNavProps) {
     { href: "/how-it-works", label: "How It Works" },
     { href: "/for-creators", label: "For Creators" },
     { href: "/for-learners", label: "For Learners" },
+    { href: "/pricing", label: "Pricing" },
     { href: "/about", label: "About" },
   ]
 
