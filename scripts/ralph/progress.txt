@@ -7,6 +7,9 @@
 - Uses Radix UI for accessible components
 - Uses 'motion' library (Framer Motion) for animations
 - Existing components in /components/ui/ follow shadcn/ui patterns
+- Dojo design system: Use CSS vars (--dojo-cyan, --dojo-bg) and utility classes (dojo-card, dojo-btn-primary)
+- Animation patterns: layoutId for toggle animations, AnimatePresence mode="wait" for content swaps
+- Use GlowEffect and Magnetic components from /components/ for interactive buttons
 
 ---
 
@@ -55,5 +58,30 @@
   - Browser verification blocked by missing .env.local (Supabase credentials)
   - All nav links defined in navItems array for easy updates
   - Responsive breakpoints: lg:flex for desktop nav, lg:hidden for mobile trigger
+
+---
+
+## 2026-01-30 - US-003: Build homepage hero section with audience toggle
+- **Status**: Completed
+- **Files**: app/(marketing)/marketing-hero.tsx
+- **What was implemented**:
+  - Created audience toggle switch (I'm a Creator / I'm a Learner) with animated layoutId indicator
+  - Dynamic headline and subheadline content based on toggle selection
+    - Creator: "Turn Your Expertise Into Income"
+    - Learner: "Master Any Skill in Minutes a Day"
+  - Dynamic CTA buttons with AnimatePresence for smooth transitions
+    - Creator: "Apply as Creator" -> /for-creators#apply
+    - Learner: "Join Waitlist" -> #waitlist
+  - Floating social proof stat cards (4 cards: 70%, 3min, 10K+, AI)
+    - Each with icon from lucide-react, hover animations, and dojo-card styling
+  - Background gradient effects using dojo-gradient-hero and dojo-gradient-radial
+  - Animated glow orbs with motion.div for continuous pulsing effect
+- **Learnings for future iterations**:
+  - Use layoutId for smooth animated transitions between toggle states
+  - AnimatePresence with mode="wait" for clean exit/enter animations
+  - Dojo utility classes work well: dojo-text-gradient, dojo-card, dojo-btn-primary, dojo-btn-secondary
+  - CSS variable approach: style={{ background: "radial-gradient(circle, var(--dojo-cyan) 0%, transparent 70%)" }}
+  - motion.div animate arrays for looping animations: scale: [1, 1.2, 1], repeat: Infinity
+  - Social proof stats should link to actual data sources in future (currently static)
 
 ---
