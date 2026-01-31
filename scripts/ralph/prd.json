@@ -1,0 +1,296 @@
+{
+  "project": "Dojo Marketing Site",
+  "branchName": "ralph/marketing-site-redesign",
+  "description": "Redesign the Dojo marketing website to match pitch deck aesthetics (dark theme, cyan accents) and drive creator/learner signups",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Implement dark theme design system",
+      "description": "As a developer, I need a design system with dark theme and cyan/teal accents so all pages have consistent Dojo branding.",
+      "acceptanceCriteria": [
+        "Update Tailwind config with Dojo color palette (dark backgrounds #0a0a0a/#111, cyan accents #00d4ff/#22d3ee)",
+        "Create CSS variables for consistent theming across components",
+        "Update existing marketing components to use new color scheme",
+        "Ensure sufficient contrast ratios for accessibility (WCAG AA)",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Redesign marketing navbar with login link",
+      "description": "As a visitor, I want a clear navigation bar so I can explore the site and access login.",
+      "acceptanceCriteria": [
+        "Dojo logo (lowercase 'dojo' text) on the left",
+        "Navigation links: How It Works, For Creators, For Learners, About",
+        "Login text link on the right that navigates to /auth/login",
+        "Get Early Access primary CTA button (cyan accent)",
+        "Mobile-responsive hamburger menu",
+        "Sticky navbar on scroll with subtle backdrop blur",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Build homepage hero section with audience toggle",
+      "description": "As a visitor, I want to immediately understand what Dojo does and see content relevant to my role (creator or learner).",
+      "acceptanceCriteria": [
+        "Toggle switch: I'm a Creator / I'm a Learner",
+        "Dynamic headline that changes based on toggle selection",
+        "Creator view: Turn Your Expertise Into Income + creator-focused subheadline",
+        "Learner view: Master Any Skill in Minutes a Day + learner-focused subheadline",
+        "Primary CTA changes: Apply as Creator vs Join Waitlist",
+        "Floating social proof elements (stats, metrics) around hero",
+        "Background with subtle gradient/glow effects matching pitch deck",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Create features grid section",
+      "description": "As a visitor, I want to understand Dojo's key features so I can evaluate if it's right for me.",
+      "acceptanceCriteria": [
+        "Section headline: The First Marketplace Powered By Cognitive Scaffolding",
+        "6 feature cards in responsive grid (3x2 desktop, 2x3 tablet, 1x6 mobile)",
+        "Features: Universal Scaffolding, Feed-to-Mastery Funnel, AI-Powered Repurposing, Peer-Reviewed Discovery, Native Monetization, Low-Friction Mastery",
+        "Each card: icon, title, description, subtle border glow on hover",
+        "Dark card backgrounds with cyan accent borders",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Build How It Works visual flow section",
+      "description": "As a visitor, I want to see how the Dojo engine transforms content so I understand the product's value.",
+      "acceptanceCriteria": [
+        "Three-step visual flow: Input (video icons) -> Dojo Engine (processing steps) -> Output (micro-lesson card)",
+        "Process steps: Semantic Segmentation, Pedagogical Labeling, Synthesis Optimization",
+        "Animated arrows/flow between steps",
+        "Dark background with glowing accent elements",
+        "Responsive layout (horizontal desktop, vertical mobile)",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Create competitive differentiation section",
+      "description": "As a visitor, I want to understand how Dojo compares to alternatives so I can see its unique value.",
+      "acceptanceCriteria": [
+        "Section headline: Why Dojo?",
+        "Comparison points vs: Skillshare/Udemy, Duolingo, TikTok, MasterClass",
+        "Format: What they do well -> What Dojo adds",
+        "Visual treatment: dark cards with subtle glow effects",
+        "Concise, scannable bullet points",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Build creator application form section",
+      "description": "As a creator, I want to apply to join Dojo so I can start monetizing my expertise.",
+      "acceptanceCriteria": [
+        "Section headline: Apply as a Creator",
+        "Form fields: Full Name, Email, Content Niche (dropdown), Social Profile Link, Monthly Audience Size",
+        "Form validation with error states",
+        "Submit button: Submit Application (cyan accent)",
+        "Success state: Application received message",
+        "Store submissions in Supabase table: creator_applications",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Build learner waitlist form section",
+      "description": "As a learner, I want to join the waitlist so I get notified when Dojo launches.",
+      "acceptanceCriteria": [
+        "Section headline: Get Early Access",
+        "Form fields: Email, Name (optional), Interests (multi-select: Fitness, Music, Makeup, Other)",
+        "Submit button: Join Waitlist (cyan accent)",
+        "Success state: You're on the list message",
+        "Store submissions in Supabase table: learner_waitlist",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Create dedicated For Creators page",
+      "description": "As a creator, I want a dedicated page explaining creator benefits so I can evaluate joining Dojo.",
+      "acceptanceCriteria": [
+        "Route: /for-creators",
+        "Hero: Turn Your Expertise Into Scalable Income",
+        "Value props: 70% revenue share, AI handles course structure, reach learners through feed, real-time analytics",
+        "The Creator Struggle problem statement from pitch deck",
+        "Embedded creator application form",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Create dedicated For Learners page",
+      "description": "As a learner, I want a dedicated page explaining learner benefits so I can evaluate using Dojo.",
+      "acceptanceCriteria": [
+        "Route: /for-learners",
+        "Hero: Master Any Skill, One Swipe at a Time",
+        "Value props: Bite-sized micro-lessons, learn from real practitioners, peer-reviewed quality, free to mastery path",
+        "The Consumer Struggle problem statement from pitch deck",
+        "Embedded learner waitlist form",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Create How It Works page",
+      "description": "As a visitor, I want a detailed explanation of how Dojo works so I can understand the platform deeply.",
+      "acceptanceCriteria": [
+        "Route: /how-it-works",
+        "Sections: The Dojo Engine, For Creators flow, For Learners flow, The Marketplace Loop",
+        "Visual diagrams matching pitch deck style",
+        "CTAs at bottom for both creators and learners",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Update About page with founder info",
+      "description": "As a visitor, I want to learn about the team so I can trust the company.",
+      "acceptanceCriteria": [
+        "Route: /about (update existing)",
+        "Company mission statement",
+        "Founder section: Jack Modesett bio (Ares Capital, InSite Property Group, UCSB)",
+        "Founder-Market Fit narrative",
+        "Contact information or link",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Build marketing footer",
+      "description": "As a visitor, I want a footer with navigation and legal links so I can find information and contact the company.",
+      "acceptanceCriteria": [
+        "Dojo logo",
+        "Navigation columns: Product (How It Works, For Creators, For Learners), Company (About, Blog), Legal (Terms, Privacy)",
+        "Social links placeholder (Twitter/X, LinkedIn)",
+        "Copyright notice and Login link",
+        "Dark background consistent with site theme",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Create Supabase tables for form submissions",
+      "description": "As a developer, I need database tables to store creator applications and learner waitlist signups.",
+      "acceptanceCriteria": [
+        "Table: creator_applications (id, created_at, name, email, niche, social_link, audience_size, status)",
+        "Table: learner_waitlist (id, created_at, email, name, interests)",
+        "RLS policies allowing anonymous inserts",
+        "Email uniqueness constraint on both tables",
+        "Migration file created in supabase/migrations",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": "This can be done anytime but should be ready before forms are connected"
+    },
+    {
+      "id": "US-015",
+      "title": "Add page transitions and micro-interactions",
+      "description": "As a visitor, I want smooth animations so the site feels polished and premium.",
+      "acceptanceCriteria": [
+        "Page fade-in transitions using motion library",
+        "Scroll-triggered animations for sections (fade up on enter)",
+        "Button hover states with subtle glow effects",
+        "Card hover states with border glow",
+        "Smooth scroll for anchor links",
+        "Respect prefers-reduced-motion",
+        "Typecheck passes",
+        "Verify in browser"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Implement responsive design across all pages",
+      "description": "As a mobile user, I want the site to work perfectly on my device so I can learn about Dojo anywhere.",
+      "acceptanceCriteria": [
+        "All pages render correctly at: 320px, 768px, 1024px, 1440px",
+        "Mobile navigation works correctly",
+        "Forms are usable on mobile",
+        "Images are optimized and responsive",
+        "Touch targets meet minimum 44px size",
+        "Typecheck passes",
+        "Verify in browser at multiple viewport sizes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "SEO and metadata optimization",
+      "description": "As a marketer, I want proper SEO so the site ranks well in search results.",
+      "acceptanceCriteria": [
+        "Update root metadata with Dojo branding",
+        "Unique title and description for each page",
+        "Open Graph images for social sharing",
+        "Structured data (Organization, WebSite)",
+        "Sitemap includes all new pages",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
