@@ -7,6 +7,8 @@ Started: Sat Jan 31 10:39:57 PST 2026
 - Polar token checks: check at both initialization (polar.ts) and usage (actions.ts)
 - Server actions in `lib/db/actions.ts` use `"use server"` directive
 - Environment variables accessed via `process.env.VARIABLE_NAME`
+- New marketing pages: create folder in `app/(marketing)/[page-name]/page.tsx`
+- Footer links to legal pages: `/terms` and `/privacy` routes defined in marketing-footer.tsx
 
 ---
 
@@ -32,4 +34,16 @@ Started: Sat Jan 31 10:39:57 PST 2026
   - Contact email links should use `text-dojo-cyan hover:underline` class for consistency with site theme
   - Terms page structure: numbered sections with h2 headings, ul lists for bullet points
   - The page is a server component (no "use client" directive needed for static content)
+---
+
+## 2026-01-31 12:30 - US-003
+- What was implemented: Created Privacy Policy page for Dojo
+- Files changed:
+  - `app/(marketing)/privacy/page.tsx`: Created new page with 12 sections covering data collection, analytics, payment processing, content uploads, and user rights
+- **Learnings for future iterations:**
+  - Privacy page didn't exist - footer linked to `/privacy` but no page was created
+  - When footer links to a page that doesn't exist, check for 404s and create missing pages
+  - Use `&apos;` for apostrophes in JSX text (e.g., "Polar's privacy policy")
+  - Polar payment processing section important for transparency about third-party data handling
+  - AI processing disclosure needed when content is transformed by AI systems
 ---
