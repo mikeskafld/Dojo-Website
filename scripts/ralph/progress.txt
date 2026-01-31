@@ -18,3 +18,42 @@
 - Target: Drive creator applications and learner waitlist signups
 
 ---
+
+## 2026-01-30 - US-001: Implement dark theme design system
+- **Status**: Already implemented
+- **Files**: app/globals.css, app/(marketing)/layout.tsx
+- **What was found**:
+  - Dojo color palette already defined in globals.css (lines 171-202)
+  - `.dojo` theme class overrides shadcn variables (lines 205-239)
+  - Utility classes: .dojo-bg, .dojo-card, .dojo-btn-primary, etc.
+  - Marketing layout already applies `className="dojo"`
+- **Learnings for future iterations**:
+  - Use `.dojo` class on root element to activate dark theme
+  - Dojo colors available via CSS vars: --dojo-cyan, --dojo-bg, --dojo-text
+  - Use utility classes like .dojo-card for consistent styling
+  - Tailwind v4 uses @theme inline in CSS, not tailwind.config.js
+
+---
+
+## 2026-01-30 - US-002: Redesign marketing navbar with login link
+- **Status**: Already implemented
+- **Files**: app/(marketing)/marketing-navbar.tsx, app/(marketing)/marketing-header.tsx
+- **What was found**:
+  - Full navbar implementation exists in marketing-navbar.tsx
+  - Uses MainNav component with session prop for conditional auth rendering
+  - Logo: lowercase "dojo" text in line 50-52
+  - Nav links: How It Works, For Creators, For Learners, About (lines 29-34)
+  - Login link: /auth/login on right side (lines 87-91)
+  - CTA button: "Get Early Access" with primary styling (lines 93-100)
+  - Mobile menu: Sheet component with hamburger trigger (lines 105-155)
+  - Sticky header: `sticky top-0 backdrop-blur-md bg-background/80` (line 38)
+  - Active state animation with motion/framer-motion (lines 69-75)
+- **Learnings for future iterations**:
+  - Marketing header uses Suspense with fallback for session loading
+  - Uses shadcn Sheet component for mobile menu
+  - Active nav indicator uses framer-motion layoutId for smooth transitions
+  - Browser verification blocked by missing .env.local (Supabase credentials)
+  - All nav links defined in navItems array for easy updates
+  - Responsive breakpoints: lg:flex for desktop nav, lg:hidden for mobile trigger
+
+---

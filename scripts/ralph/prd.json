@@ -15,8 +15,8 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Design system was already implemented in globals.css with .dojo theme class"
     },
     {
       "id": "US-002",
@@ -33,8 +33,8 @@
         "Verify in browser"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Navbar was already implemented in marketing-navbar.tsx with all acceptance criteria met"
     },
     {
       "id": "US-003",
