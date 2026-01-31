@@ -108,3 +108,29 @@
   - Build fails due to missing POLAR_WEBHOOK_SECRET but typecheck and lint pass
 
 ---
+
+## 2026-01-30 - US-005: Build How It Works visual flow section
+- **Status**: Completed
+- **Files**:
+  - app/(marketing)/how-it-works-section.tsx (new)
+  - app/(marketing)/page.tsx (updated import)
+- **What was implemented**:
+  - Created HowItWorksSection component with three-step visual flow
+  - Input column: YouTube, Course Videos, Podcasts with icons
+  - Dojo Engine column (center): Semantic Segmentation, Pedagogical Labeling, Synthesis Optimization
+  - Output column: Sample micro-lesson card with video thumbnail, duration badge, quiz indicator
+  - Animated arrows between sections using motion.div with x/y oscillation
+  - Connecting lines between process steps using gradient borders
+  - Desktop layout: Horizontal flow with flexbox (3 columns)
+  - Mobile layout: Vertical flow with centered elements
+  - Dark background with glowing radial gradient centered on Dojo Engine
+  - Scroll-triggered animations using useInView with staggered reveal
+- **Learnings for future iterations**:
+  - Use hidden lg:flex / lg:hidden pattern for responsive desktop/mobile layouts
+  - Animated arrows: motion.div with animate={{ x: [0, 8, 0] }} and repeat: Infinity
+  - For vertical mobile arrows, use rotate-90 on ArrowRight icon
+  - Sample lesson card pattern: aspect-video container with Play button overlay
+  - Connecting lines between steps: absolute positioned div with gradient background
+  - lucide-react icons for content types: Video, FileVideo, Podcast
+
+---
