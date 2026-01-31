@@ -60,8 +60,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Replaced all 8 social media marketing FAQs with Dojo-specific content. Added 4 Creator questions: revenue share (70%), content upload process, content ownership, payout timing"
     },
     {
       "id": "US-005",
@@ -75,8 +75,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added 4 Learner questions: subscription pricing, lesson format (micro-lessons), launch timeline, early access benefits"
     },
     {
       "id": "US-006",

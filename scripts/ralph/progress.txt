@@ -47,3 +47,24 @@ Started: Sat Jan 31 10:39:57 PST 2026
   - Polar payment processing section important for transparency about third-party data handling
   - AI processing disclosure needed when content is transformed by AI systems
 ---
+
+## 2026-01-31 12:45 - US-004 & US-005
+- What was implemented: Complete FAQ rewrite with Creator and Learner focused questions
+- Files changed:
+  - `app/(marketing)/marketing-faq.tsx`: Replaced all 8 social media marketing FAQs with Dojo-specific content
+- **Creator FAQs added:**
+  - Revenue share (70% of net revenue, monthly payouts)
+  - Content upload process (AI transforms content into micro-lessons)
+  - Content ownership (creator retains IP)
+  - Payout timing (monthly, $50 minimum)
+- **Learner FAQs added:**
+  - Subscription pricing (flexible plans, unlimited access)
+  - Lesson format (5-10 minute micro-lessons)
+  - Launch timeline (coming soon, join waitlist)
+  - Early access benefits (founding member pricing, beta features)
+- **Learnings for future iterations:**
+  - FAQ grid shows first 4 items, then heading, then items 5-8
+  - Both mobile (accordion) and desktop (grid) layouts use same faqItems array
+  - Answers should be concise (1-3 sentences) for grid display
+  - Include calls-to-action where appropriate (e.g., "Check our pricing page")
+---
