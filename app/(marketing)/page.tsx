@@ -4,6 +4,7 @@ import { getURL } from "@/lib/utils"
 import { FadeIn } from "@/components/fade-in"
 import { DojoFeaturesSection } from "@/app/(marketing)/dojo-features"
 import { HowItWorksSection } from "@/app/(marketing)/how-it-works-section"
+import { WhyDojoSection } from "@/app/(marketing)/why-dojo-section"
 import { LandingHeroSection } from "@/app/(marketing)/marketing-hero"
 
 import { MarketingCTA } from "./marketing-cta"
@@ -69,6 +70,9 @@ export default async function LandingPage() {
       </FadeIn>
       <FadeIn>
         <HowItWorksSection />
+      </FadeIn>
+      <FadeIn>
+        <WhyDojoSection />
       </FadeIn>
       <FadeIn>
         <MarketingQuote />
