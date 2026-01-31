@@ -156,44 +156,46 @@ export default function MarketingFAQ() {
 }
 
 const faqItems = [
+  // Creator Questions
   {
-    question: "How does the AI content generation work?",
+    question: "How does the revenue share work for creators?",
     answer:
-      "Our AI analyzes your brand's voice, target audience, and content goals to generate engaging social media posts, captions, and stories. You can customize the output and maintain full control over what gets published.",
+      "Creators earn 70% of net revenue generated from their content. Revenue is calculated based on learner engagement with your lessons, and payouts are processed monthly for balances exceeding $50 USD.",
   },
   {
-    question: "What kind of analytics do you provide?",
+    question: "What's the content upload process?",
     answer:
-      "We provide comprehensive analytics including engagement rates, reach, impressions, and audience insights. Our platform also offers content performance predictions and optimization recommendations.",
+      "Simply upload your expertise in any format - videos, documents, or existing content. Our AI transforms your material into structured micro-lessons optimized for learning retention. You review and approve before anything goes live.",
   },
   {
-    question: "Can I integrate with my existing social media accounts?",
+    question: "Do I retain ownership of my content?",
     answer:
-      "Yes, we offer seamless integration with major social media platforms including Instagram, Twitter, LinkedIn, and Facebook. You can manage all your accounts from a single dashboard.",
+      "Yes, you retain full ownership of your original content. You grant Dojo a license to process, display, and create learning materials from your uploads, but the underlying intellectual property remains yours.",
   },
   {
-    question: "How often is the trend analysis updated?",
+    question: "When and how do I get paid?",
     answer:
-      "Our trend analysis is updated in real-time, providing you with the latest insights and opportunities. We monitor multiple data sources to ensure you never miss a trending topic relevant to your brand.",
+      "Payouts are processed monthly via your preferred payment method set up in your creator dashboard. You can track your earnings, engagement metrics, and upcoming payouts in real-time.",
+  },
+  // Learner Questions
+  {
+    question: "How much does a Dojo subscription cost?",
+    answer:
+      "We offer flexible subscription plans with monthly and annual options. Subscribers get unlimited access to all lessons on the platform. Check our pricing page for current plans and early-bird discounts.",
   },
   {
-    question: "What kind of support do you offer?",
+    question: "What format are the lessons in?",
     answer:
-      "We provide 24/7 email support for all users, with priority support and Slack access for Plus plan subscribers. Our team is always ready to help you maximize your content strategy.",
+      "Lessons are delivered as bite-sized micro-lessons designed for 5-10 minute learning sessions. Each lesson includes summaries, interactive quizzes, and progress tracking to maximize retention.",
   },
   {
-    question: "Is there a limit to how much content I can generate?",
+    question: "When is Dojo launching?",
     answer:
-      "No, there are no limits on content generation. You can create as much content as you need to maintain an active and engaging social media presence.",
+      "We're launching soon! Join the waitlist to be notified when we go live. Early waitlist members will get exclusive access to founding member pricing and first pick of new content.",
   },
   {
-    question: "Can I schedule posts in advance?",
+    question: "What are the benefits of joining early?",
     answer:
-      "Yes, our platform includes a powerful scheduling feature that allows you to plan and schedule your content weeks or months in advance. You can also set up automated posting at optimal times for maximum engagement.",
-  },
-  {
-    question: "How do you ensure content quality and brand consistency?",
-    answer:
-      "Our AI is trained to maintain your brand's voice and style while generating content. You can set brand guidelines, tone preferences, and content parameters to ensure all generated content aligns with your brand identity.",
+      "Early members get locked-in founding member pricing, exclusive access to beta features, and direct input on platform development. Plus, you'll be first to access content from our creator community.",
   },
 ]

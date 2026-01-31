@@ -1,7 +1,8 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "motion/react"
+import { useSearchParams } from "next/navigation"
+import { motion, useInView, AnimatePresence } from "motion/react"
 import {
   Video,
   FileVideo,
@@ -10,38 +11,119 @@ import {
   Layers,
   Tag,
   Sparkles,
-  Play,
-  Clock,
-  CheckCircle,
+  DollarSign,
+  TrendingUp,
+  Compass,
+  BookOpen,
+  Target,
+  Award,
+  Zap,
 } from "lucide-react"
 
-const inputTypes = [
-  { icon: Video, label: "YouTube" },
-  { icon: FileVideo, label: "Course Videos" },
-  { icon: Podcast, label: "Podcasts" },
-]
+import type { AudienceType } from "./marketing-hero"
 
-const processSteps = [
-  {
-    icon: Layers,
-    title: "Semantic Segmentation",
-    description: "AI identifies logical content boundaries and key concepts",
+// Creator flow: Content upload → AI processing → Monetization
+const creatorFlow = {
+  input: {
+    title: "Your Content",
+    items: [
+      { icon: Video, label: "YouTube Videos" },
+      { icon: FileVideo, label: "Course Material" },
+      { icon: Podcast, label: "Podcast Episodes" },
+    ],
   },
-  {
-    icon: Tag,
-    title: "Pedagogical Labeling",
-    description: "Each segment tagged with learning objectives and difficulty",
+  process: {
+    title: "Dojo Engine",
+    steps: [
+      {
+        icon: Layers,
+        title: "Smart Segmentation",
+        description: "AI breaks your content into bite-sized lessons",
+      },
+      {
+        icon: Tag,
+        title: "Auto-Structure",
+        description: "Learning objectives and quizzes generated automatically",
+      },
+      {
+        icon: Sparkles,
+        title: "Engagement Boost",
+        description: "Content optimized for retention and completion",
+      },
+    ],
   },
-  {
-    icon: Sparkles,
-    title: "Synthesis Optimization",
-    description: "Content restructured for maximum retention and engagement",
+  output: {
+    title: "Passive Income",
+    card: {
+      icon: DollarSign,
+      headline: "Monthly Revenue",
+      stats: [
+        { label: "Subscribers", value: "1,247" },
+        { label: "This Month", value: "$2,840" },
+      ],
+      trend: "+23% from last month",
+    },
   },
-]
+}
+
+// Learner flow: Discovery → Micro-lessons → Mastery
+const learnerFlow = {
+  input: {
+    title: "What You Want to Learn",
+    items: [
+      { icon: Compass, label: "Browse Topics" },
+      { icon: Target, label: "Set Goals" },
+      { icon: BookOpen, label: "Choose Path" },
+    ],
+  },
+  process: {
+    title: "Personalized Learning",
+    steps: [
+      {
+        icon: Zap,
+        title: "Smart Matching",
+        description: "AI finds lessons that match your skill level",
+      },
+      {
+        icon: Layers,
+        title: "Bite-Sized Delivery",
+        description: "Complex topics broken into 5-minute micro-lessons",
+      },
+      {
+        icon: Sparkles,
+        title: "Adaptive Pacing",
+        description: "Content adjusts to your learning speed and style",
+      },
+    ],
+  },
+  output: {
+    title: "Skill Mastery",
+    card: {
+      icon: Award,
+      headline: "Photography Basics",
+      stats: [
+        { label: "Progress", value: "78%" },
+        { label: "Streak", value: "12 days" },
+      ],
+      trend: "3 lessons to completion",
+    },
+  },
+}
+
+const flowContent = {
+  creator: creatorFlow,
+  learner: learnerFlow,
+}
 
 export function HowItWorksSection() {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.2 })
+  const searchParams = useSearchParams()
+
+  // Read mode from URL, default to "learner"
+  const modeParam = searchParams.get("mode")
+  const audience: AudienceType = modeParam === "creator" ? "creator" : "learner"
+  const currentFlow = flowContent[audience]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -108,44 +190,48 @@ export function HowItWorksSection() {
             <span className="text-[var(--dojo-text)]"> Works</span>
           </h2>
           <p className="max-w-2xl mx-auto text-lg text-[var(--dojo-text-muted)]">
-            From long-form content to bite-sized mastery in three intelligent
-            steps.
+            {audience === "creator"
+              ? "From your expertise to passive income in three intelligent steps."
+              : "From curiosity to mastery in bite-sized daily lessons."}
           </p>
         </motion.div>
 
         {/* Visual Flow - Desktop: Horizontal, Mobile: Vertical */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="max-w-6xl mx-auto"
-        >
-          {/* Desktop Layout */}
-          <div className="hidden lg:flex items-stretch gap-6">
-            {/* Input Column */}
-            <motion.div
-              variants={itemVariants}
-              className="flex-1 p-6 rounded-xl dojo-card"
-            >
-              <h3 className="text-lg font-semibold text-[var(--dojo-text)] mb-4 text-center">
-                Your Content
-              </h3>
-              <div className="space-y-3">
-                {inputTypes.map((input) => (
-                  <div
-                    key={input.label}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-[var(--dojo-surface)] border border-[var(--dojo-border)]"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-[var(--dojo-cyan-muted)] flex items-center justify-center">
-                      <input.icon className="w-5 h-5 text-[var(--dojo-cyan)]" />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={audience}
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            exit={{ opacity: 0, y: -20 }}
+            className="max-w-6xl mx-auto"
+          >
+            {/* Desktop Layout */}
+            <div className="hidden lg:flex items-stretch gap-6">
+              {/* Input Column */}
+              <motion.div
+                variants={itemVariants}
+                className="flex-1 p-6 rounded-xl dojo-card"
+              >
+                <h3 className="text-lg font-semibold text-[var(--dojo-text)] mb-4 text-center">
+                  {currentFlow.input.title}
+                </h3>
+                <div className="space-y-3">
+                  {currentFlow.input.items.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-[var(--dojo-surface)] border border-[var(--dojo-border)]"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-[var(--dojo-cyan-muted)] flex items-center justify-center">
+                        <item.icon className="w-5 h-5 text-[var(--dojo-cyan)]" />
+                      </div>
+                      <span className="text-sm text-[var(--dojo-text-muted)]">
+                        {item.label}
+                      </span>
                     </div>
-                    <span className="text-sm text-[var(--dojo-text-muted)]">
-                      {input.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+                  ))}
+                </div>
+              </motion.div>
 
             {/* Arrow */}
             <motion.div
@@ -166,7 +252,7 @@ export function HowItWorksSection() {
               </motion.div>
             </motion.div>
 
-            {/* Dojo Engine Column */}
+            {/* Process Column */}
             <motion.div
               variants={itemVariants}
               className="flex-[2] p-6 rounded-xl dojo-card relative overflow-hidden"
@@ -181,11 +267,11 @@ export function HowItWorksSection() {
               />
 
               <h3 className="text-lg font-semibold text-center mb-6 relative z-10">
-                <span className="dojo-text-gradient">Dojo Engine</span>
+                <span className="dojo-text-gradient">{currentFlow.process.title}</span>
               </h3>
 
               <div className="space-y-4 relative z-10">
-                {processSteps.map((step, index) => (
+                {currentFlow.process.steps.map((step, index) => (
                   <div key={step.title} className="relative">
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-[var(--dojo-surface)]/50 border border-[var(--dojo-border)] backdrop-blur-sm">
                       <div className="w-10 h-10 rounded-lg bg-[var(--dojo-cyan-muted)] flex items-center justify-center shrink-0">
@@ -201,7 +287,7 @@ export function HowItWorksSection() {
                       </div>
                     </div>
                     {/* Connecting line */}
-                    {index < processSteps.length - 1 && (
+                    {index < currentFlow.process.steps.length - 1 && (
                       <div className="absolute left-[1.25rem] top-full w-[2px] h-4 bg-gradient-to-b from-[var(--dojo-cyan)] to-transparent" />
                     )}
                   </div>
@@ -229,41 +315,44 @@ export function HowItWorksSection() {
               </motion.div>
             </motion.div>
 
-            {/* Output Column - Micro-Lesson Card */}
+            {/* Output Column */}
             <motion.div
               variants={itemVariants}
               className="flex-1 p-6 rounded-xl dojo-card"
             >
               <h3 className="text-lg font-semibold text-[var(--dojo-text)] mb-4 text-center">
-                Micro-Lessons
+                {currentFlow.output.title}
               </h3>
 
-              {/* Sample Lesson Card */}
+              {/* Dynamic Output Card */}
               <div className="rounded-lg bg-[var(--dojo-surface)] border border-[var(--dojo-border)] overflow-hidden">
-                {/* Video Thumbnail */}
+                {/* Header with Icon */}
                 <div className="relative aspect-video bg-gradient-to-br from-[var(--dojo-cyan-muted)] to-[var(--dojo-surface)] flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-[var(--dojo-cyan)]/20 border border-[var(--dojo-cyan)] flex items-center justify-center backdrop-blur-sm">
-                    <Play className="w-5 h-5 text-[var(--dojo-cyan)] ml-1" />
-                  </div>
-                  <div className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-1 rounded bg-black/60 text-xs text-white">
-                    <Clock className="w-3 h-3" />
-                    <span>2:45</span>
+                  <div className="w-16 h-16 rounded-full bg-[var(--dojo-cyan)]/20 border border-[var(--dojo-cyan)] flex items-center justify-center backdrop-blur-sm">
+                    <currentFlow.output.card.icon className="w-8 h-8 text-[var(--dojo-cyan)]" />
                   </div>
                 </div>
 
-                {/* Lesson Info */}
-                <div className="p-3">
-                  <h4 className="text-sm font-medium text-[var(--dojo-text)] mb-1 line-clamp-2">
-                    Understanding Chord Progressions
+                {/* Card Info */}
+                <div className="p-4">
+                  <h4 className="text-sm font-medium text-[var(--dojo-text)] mb-3">
+                    {currentFlow.output.card.headline}
                   </h4>
-                  <div className="flex items-center gap-2 text-xs text-[var(--dojo-text-muted)]">
-                    <span className="px-2 py-0.5 rounded-full bg-[var(--dojo-cyan-muted)] text-[var(--dojo-cyan)]">
-                      Music
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3 text-green-500" />
-                      Quiz included
-                    </span>
+                  <div className="space-y-2">
+                    {currentFlow.output.card.stats.map((stat) => (
+                      <div key={stat.label} className="flex justify-between items-center">
+                        <span className="text-xs text-[var(--dojo-text-muted)]">
+                          {stat.label}
+                        </span>
+                        <span className="text-sm font-semibold text-[var(--dojo-cyan)]">
+                          {stat.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-green-500">
+                    <TrendingUp className="w-3 h-3" />
+                    <span>{currentFlow.output.card.trend}</span>
                   </div>
                 </div>
               </div>
@@ -275,17 +364,17 @@ export function HowItWorksSection() {
             {/* Input Section */}
             <motion.div variants={itemVariants} className="p-6 rounded-xl dojo-card">
               <h3 className="text-lg font-semibold text-[var(--dojo-text)] mb-4 text-center">
-                Your Content
+                {currentFlow.input.title}
               </h3>
               <div className="flex flex-wrap justify-center gap-3">
-                {inputTypes.map((input) => (
+                {currentFlow.input.items.map((item) => (
                   <div
-                    key={input.label}
+                    key={item.label}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--dojo-surface)] border border-[var(--dojo-border)]"
                   >
-                    <input.icon className="w-5 h-5 text-[var(--dojo-cyan)]" />
+                    <item.icon className="w-5 h-5 text-[var(--dojo-cyan)]" />
                     <span className="text-sm text-[var(--dojo-text-muted)]">
-                      {input.label}
+                      {item.label}
                     </span>
                   </div>
                 ))}
@@ -312,7 +401,7 @@ export function HowItWorksSection() {
               </motion.div>
             </motion.div>
 
-            {/* Dojo Engine Section */}
+            {/* Process Section */}
             <motion.div
               variants={itemVariants}
               className="p-6 rounded-xl dojo-card relative overflow-hidden"
@@ -326,11 +415,11 @@ export function HowItWorksSection() {
               />
 
               <h3 className="text-lg font-semibold text-center mb-6 relative z-10">
-                <span className="dojo-text-gradient">Dojo Engine</span>
+                <span className="dojo-text-gradient">{currentFlow.process.title}</span>
               </h3>
 
               <div className="space-y-4 relative z-10">
-                {processSteps.map((step, index) => (
+                {currentFlow.process.steps.map((step, index) => (
                   <div key={step.title} className="relative">
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-[var(--dojo-surface)]/50 border border-[var(--dojo-border)] backdrop-blur-sm">
                       <div className="w-10 h-10 rounded-lg bg-[var(--dojo-cyan-muted)] flex items-center justify-center shrink-0">
@@ -345,7 +434,7 @@ export function HowItWorksSection() {
                         </p>
                       </div>
                     </div>
-                    {index < processSteps.length - 1 && (
+                    {index < currentFlow.process.steps.length - 1 && (
                       <div className="absolute left-[1.25rem] top-full w-[2px] h-4 bg-gradient-to-b from-[var(--dojo-cyan)] to-transparent" />
                     )}
                   </div>
@@ -377,37 +466,44 @@ export function HowItWorksSection() {
             {/* Output Section */}
             <motion.div variants={itemVariants} className="p-6 rounded-xl dojo-card">
               <h3 className="text-lg font-semibold text-[var(--dojo-text)] mb-4 text-center">
-                Micro-Lessons
+                {currentFlow.output.title}
               </h3>
 
               <div className="max-w-xs mx-auto rounded-lg bg-[var(--dojo-surface)] border border-[var(--dojo-border)] overflow-hidden">
+                {/* Header with Icon */}
                 <div className="relative aspect-video bg-gradient-to-br from-[var(--dojo-cyan-muted)] to-[var(--dojo-surface)] flex items-center justify-center">
                   <div className="w-12 h-12 rounded-full bg-[var(--dojo-cyan)]/20 border border-[var(--dojo-cyan)] flex items-center justify-center backdrop-blur-sm">
-                    <Play className="w-5 h-5 text-[var(--dojo-cyan)] ml-1" />
-                  </div>
-                  <div className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-1 rounded bg-black/60 text-xs text-white">
-                    <Clock className="w-3 h-3" />
-                    <span>2:45</span>
+                    <currentFlow.output.card.icon className="w-6 h-6 text-[var(--dojo-cyan)]" />
                   </div>
                 </div>
-                <div className="p-3">
-                  <h4 className="text-sm font-medium text-[var(--dojo-text)] mb-1 line-clamp-2">
-                    Understanding Chord Progressions
+
+                {/* Card Info */}
+                <div className="p-4">
+                  <h4 className="text-sm font-medium text-[var(--dojo-text)] mb-3">
+                    {currentFlow.output.card.headline}
                   </h4>
-                  <div className="flex items-center gap-2 text-xs text-[var(--dojo-text-muted)]">
-                    <span className="px-2 py-0.5 rounded-full bg-[var(--dojo-cyan-muted)] text-[var(--dojo-cyan)]">
-                      Music
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3 text-green-500" />
-                      Quiz included
-                    </span>
+                  <div className="space-y-2">
+                    {currentFlow.output.card.stats.map((stat) => (
+                      <div key={stat.label} className="flex justify-between items-center">
+                        <span className="text-xs text-[var(--dojo-text-muted)]">
+                          {stat.label}
+                        </span>
+                        <span className="text-sm font-semibold text-[var(--dojo-cyan)]">
+                          {stat.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-green-500">
+                    <TrendingUp className="w-3 h-3" />
+                    <span>{currentFlow.output.card.trend}</span>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )

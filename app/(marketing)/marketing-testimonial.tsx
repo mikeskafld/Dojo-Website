@@ -57,82 +57,64 @@ function Marquee({
 
 const reviews = [
   {
-    name: "Sarah Chen",
-    username: "@sarahchen_dev",
-    body: "The animations and UI components are absolutely stunning! This has saved me countless hours of development time.",
+    name: "Maria Santos",
+    username: "@mariafitness • Fitness Creator",
+    body: "Finally, a platform that lets me focus on what I know best while AI handles the tedious lesson structuring. 70% revenue share is unheard of!",
     img: "/davasya-tweet.jpg",
   },
   {
-    name: "Marcus Rodriguez",
-    username: "@marcus_rodriguez",
-    body: "As a full-stack developer, I'm blown away by the quality of these templates. The attention to detail is incredible.",
+    name: "James Park",
+    username: "@jamespark • Photography Coach",
+    body: "I've tried teaching on other platforms but the production overhead was killing me. Dojo's AI transforms my raw content into polished lessons.",
     img: "/tulip-tweet.jpg",
   },
   {
-    name: "Alex Thompson",
-    username: "@alexthompson",
-    body: "This is exactly what I needed for my startup. The components are so polished and professional!",
+    name: "Aisha Johnson",
+    username: "@aishacooks • Culinary Expert",
+    body: "The revenue share model actually makes sense for creators. No more fighting algorithms for views - just real income from real learners.",
     img: "/supabase-ceo.jpg",
   },
   {
-    name: "Priya Sharma",
-    username: "@priyasharma",
-    body: "The documentation is crystal clear and the code quality is top-notch. Highly recommended!",
+    name: "David Kim",
+    username: "@davidkim • Music Producer",
+    body: "Micro-lessons are genius. My students actually retain what I teach them instead of getting overwhelmed by 2-hour tutorials.",
     img: "/dan-tweet.jpg",
   },
   {
-    name: "James Wilson",
-    username: "@jameswilson",
-    body: "Just implemented this in my project and the results are amazing. The animations are smooth as butter!",
+    name: "Rachel Torres",
+    username: "@racheltorres • Language Teacher",
+    body: "The fact that I own my content while Dojo handles distribution is a game-changer. This is how creator platforms should work.",
     img: "/wayne-tweet.jpg",
   },
   {
-    name: "Emma Davis",
-    username: "@emmadavis",
-    body: "The attention to accessibility and responsive design is impressive. This is a game-changer for my workflow.",
+    name: "Marcus Chen",
+    username: "@marcuschen • Business Coach",
+    body: "My YouTube channel has 50K subs but barely pays the bills. Dojo's model means I can actually earn from my expertise.",
     img: "/reddit-2.png",
   },
   {
-    name: "Lucas Kim",
-    username: "@lucaskim",
-    body: "I've tried many UI libraries, but this one stands out with its modern design and excellent performance.",
+    name: "Sophie Williams",
+    username: "@sophiewrites • Writing Instructor",
+    body: "I love that learners get bite-sized lessons they can actually finish. My completion rates are going to skyrocket compared to courses.",
     img: "/allesandro-tweet.jpg",
   },
   {
-    name: "Sophie Anderson",
-    username: "@sophieanderson",
-    body: "The dark mode implementation is perfect, and the animations are so smooth. Exactly what I was looking for!",
+    name: "Alex Rivera",
+    username: "@alexrivera • Design Mentor",
+    body: "Passive income from my expertise? Yes please. The AI lesson transformation means I can scale without burning out.",
     img: "/brad-bitler-tweet.jpg",
   },
   {
-    name: "David Park",
-    username: "@davidpark",
-    body: "The component architecture is so well thought out. It's made my development process much more efficient.",
+    name: "Nina Patel",
+    username: "@ninapatel • Yoga Instructor",
+    body: "Traditional online courses take months to produce. With Dojo, I can share my knowledge and start earning almost immediately.",
     img: "/reddit-3.png",
   },
   {
-    name: "Olivia Martinez",
-    username: "@oliviamartinez",
-    body: "The quality of these templates is outstanding. They've helped me deliver projects faster than ever.",
+    name: "Chris Thompson",
+    username: "@christhompson • Developer Educator",
+    body: "The cognitive scaffolding approach is backed by real learning science. This isn't just another course platform.",
     img: "/aaron-tweet.jpg",
-  },
-  {
-    name: "Ryan Chen",
-    username: "@ryanchen",
-    body: "The attention to detail in the animations and transitions is remarkable. My clients love the results!",
-    img: "/yash-tweet.jpg",
-  },
-  {
-    name: "Isabella Lee",
-    username: "@isabellalee",
-    body: "These components have elevated my projects to a whole new level. The design system is incredibly well crafted.",
-    img: "/tulip-tweet.jpg",
-  },
-  {
-    name: "Michael Brown",
-    username: "@michaelbrown",
-    body: "The performance optimization is impressive. Everything loads quickly and runs smoothly.",
-    img: "/reddit-1.png",
   },
 ]
 
@@ -190,7 +172,7 @@ export function MarketingTestimonial() {
       innerClassName="pt-6 pb-4 "
     >
       <GradientHeading size="xxl" weight="base" className=" mb-8">
-        Customers <span className="text-primary"></span>
+        What Creators Are Saying
       </GradientHeading>
       <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-black ">
         <Marquee pauseOnHover className="[--duration:20s]">

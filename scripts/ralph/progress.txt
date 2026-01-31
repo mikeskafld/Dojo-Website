@@ -1,435 +1,244 @@
+# Ralph Progress Log
+Started: Sat Jan 31 10:39:57 PST 2026
+
 ## Codebase Patterns
-- This is a Next.js 15 project with React 19
-- Uses Tailwind CSS v4 with @tailwindcss/postcss
-- Marketing pages are in app/(marketing)/ route group
-- Authenticated pages are in app/(authenticated)/ route group
-- Uses Supabase for backend (auth + database)
-- Uses Radix UI for accessible components
-- Uses 'motion' library (Framer Motion) for animations
-- Existing components in /components/ui/ follow shadcn/ui patterns
-- Dojo design system: Use CSS vars (--dojo-cyan, --dojo-bg) and utility classes (dojo-card, dojo-btn-primary)
-- Animation patterns: layoutId for toggle animations, AnimatePresence mode="wait" for content swaps
-- Use GlowEffect and Magnetic components from /components/ for interactive buttons
-- Form submissions: Use server actions in lib/db/actions.ts with exported types (e.g., FormData, Result types)
-- Supabase RLS for anonymous inserts: Use `with check (true)` policy
-- No shadcn Select component - use native select with custom styling matching Input component
-- Lucide icons with JS global names (e.g., `Infinity`) must be aliased: `import { Infinity as InfinityIcon }` to avoid TypeScript conflicts with `repeat: Infinity` in animations
+- Use `console.warn` with `[ModuleName]` prefix for missing config warnings
+- Use `console.error` with `[FunctionName]` prefix for API failures
+- Polar token checks: check at both initialization (polar.ts) and usage (actions.ts)
+- Server actions in `lib/db/actions.ts` use `"use server"` directive
+- Environment variables accessed via `process.env.VARIABLE_NAME`
+- New marketing pages: create folder in `app/(marketing)/[page-name]/page.tsx`
+- Footer links to legal pages: `/terms` and `/privacy` routes defined in marketing-footer.tsx
+- URL parameters: use `useSearchParams()` to read, `router.replace()` with `{ scroll: false }` for shallow routing
+- Audience mode: `AudienceType` exported from marketing-hero.tsx, values are "creator" | "learner"
+- Form section IDs: `#apply` for creator application, `#waitlist` for learner waitlist - use for anchor navigation
+- Suspense boundaries: Components using `useSearchParams()` must be wrapped in `<Suspense>` for Next.js 15 static generation
+- Navigation: Marketing navbar links defined in `navItems` array in marketing-navbar.tsx - shared by desktop and mobile
+- Blog posts: MDX files in `app/(marketing)/blog/posts/[slug].mdx` - frontmatter needs title, publishedAt, category, description, summary
 
 ---
 
-# Progress Log
-
-## Project Initialized - Marketing Site Redesign
-- PRD created with 17 user stories
-- Design reference: jointrybe.com format with pitch deck aesthetics (dark theme, cyan accents)
-- Target: Drive creator applications and learner waitlist signups
-
+## 2026-01-31 10:45 - US-001
+- What was implemented: Enhanced error handling for Polar pricing environment variables
+- Files changed:
+  - `lib/polar.ts`: Added early warning when POLAR_ACCESS_TOKEN is missing
+  - `lib/db/actions.ts`: Added pre-check in getPolarProducts() and improved error messages
+- **Learnings for future iterations:**
+  - The Polar SDK is initialized at module load time, so warnings appear at startup
+  - getPolarProducts() is already wrapped in try/catch - added early return for missing token
+  - Error messages should include function name prefix for easier debugging
+  - TypeScript typechecks pass even without POLAR_ACCESS_TOKEN (uses empty string fallback)
 ---
 
-## 2026-01-30 - US-001: Implement dark theme design system
-- **Status**: Already implemented
-- **Files**: app/globals.css, app/(marketing)/layout.tsx
-- **What was found**:
-  - Dojo color palette already defined in globals.css (lines 171-202)
-  - `.dojo` theme class overrides shadcn variables (lines 205-239)
-  - Utility classes: .dojo-bg, .dojo-card, .dojo-btn-primary, etc.
-  - Marketing layout already applies `className="dojo"`
-- **Learnings for future iterations**:
-  - Use `.dojo` class on root element to activate dark theme
-  - Dojo colors available via CSS vars: --dojo-cyan, --dojo-bg, --dojo-text
-  - Use utility classes like .dojo-card for consistent styling
-  - Tailwind v4 uses @theme inline in CSS, not tailwind.config.js
-
+## 2026-01-31 11:15 - US-002
+- What was implemented: Complete rewrite of Terms of Service page for Dojo
+- Files changed:
+  - `app/(marketing)/terms/page.tsx`: Replaced all content from generic "Vibe Marketing" to Dojo-specific terms
+- **Learnings for future iterations:**
+  - Legal pages use `FadeIn`, `GradientHeading`, and `SectionCard` components for consistent styling
+  - Use `&quot;` for double quotes in JSX text to avoid escaping issues
+  - Contact email links should use `text-dojo-cyan hover:underline` class for consistency with site theme
+  - Terms page structure: numbered sections with h2 headings, ul lists for bullet points
+  - The page is a server component (no "use client" directive needed for static content)
 ---
 
-## 2026-01-30 - US-002: Redesign marketing navbar with login link
-- **Status**: Already implemented
-- **Files**: app/(marketing)/marketing-navbar.tsx, app/(marketing)/marketing-header.tsx
-- **What was found**:
-  - Full navbar implementation exists in marketing-navbar.tsx
-  - Uses MainNav component with session prop for conditional auth rendering
-  - Logo: lowercase "dojo" text in line 50-52
-  - Nav links: How It Works, For Creators, For Learners, About (lines 29-34)
-  - Login link: /auth/login on right side (lines 87-91)
-  - CTA button: "Get Early Access" with primary styling (lines 93-100)
-  - Mobile menu: Sheet component with hamburger trigger (lines 105-155)
-  - Sticky header: `sticky top-0 backdrop-blur-md bg-background/80` (line 38)
-  - Active state animation with motion/framer-motion (lines 69-75)
-- **Learnings for future iterations**:
-  - Marketing header uses Suspense with fallback for session loading
-  - Uses shadcn Sheet component for mobile menu
-  - Active nav indicator uses framer-motion layoutId for smooth transitions
-  - Browser verification blocked by missing .env.local (Supabase credentials)
-  - All nav links defined in navItems array for easy updates
-  - Responsive breakpoints: lg:flex for desktop nav, lg:hidden for mobile trigger
-
+## 2026-01-31 12:30 - US-003
+- What was implemented: Created Privacy Policy page for Dojo
+- Files changed:
+  - `app/(marketing)/privacy/page.tsx`: Created new page with 12 sections covering data collection, analytics, payment processing, content uploads, and user rights
+- **Learnings for future iterations:**
+  - Privacy page didn't exist - footer linked to `/privacy` but no page was created
+  - When footer links to a page that doesn't exist, check for 404s and create missing pages
+  - Use `&apos;` for apostrophes in JSX text (e.g., "Polar's privacy policy")
+  - Polar payment processing section important for transparency about third-party data handling
+  - AI processing disclosure needed when content is transformed by AI systems
 ---
 
-## 2026-01-30 - US-003: Build homepage hero section with audience toggle
-- **Status**: Completed
-- **Files**: app/(marketing)/marketing-hero.tsx
-- **What was implemented**:
-  - Created audience toggle switch (I'm a Creator / I'm a Learner) with animated layoutId indicator
-  - Dynamic headline and subheadline content based on toggle selection
-    - Creator: "Turn Your Expertise Into Income"
-    - Learner: "Master Any Skill in Minutes a Day"
-  - Dynamic CTA buttons with AnimatePresence for smooth transitions
-    - Creator: "Apply as Creator" -> /for-creators#apply
-    - Learner: "Join Waitlist" -> #waitlist
-  - Floating social proof stat cards (4 cards: 70%, 3min, 10K+, AI)
-    - Each with icon from lucide-react, hover animations, and dojo-card styling
-  - Background gradient effects using dojo-gradient-hero and dojo-gradient-radial
-  - Animated glow orbs with motion.div for continuous pulsing effect
-- **Learnings for future iterations**:
-  - Use layoutId for smooth animated transitions between toggle states
-  - AnimatePresence with mode="wait" for clean exit/enter animations
-  - Dojo utility classes work well: dojo-text-gradient, dojo-card, dojo-btn-primary, dojo-btn-secondary
-  - CSS variable approach: style={{ background: "radial-gradient(circle, var(--dojo-cyan) 0%, transparent 70%)" }}
-  - motion.div animate arrays for looping animations: scale: [1, 1.2, 1], repeat: Infinity
-  - Social proof stats should link to actual data sources in future (currently static)
-
+## 2026-01-31 12:45 - US-004 & US-005
+- What was implemented: Complete FAQ rewrite with Creator and Learner focused questions
+- Files changed:
+  - `app/(marketing)/marketing-faq.tsx`: Replaced all 8 social media marketing FAQs with Dojo-specific content
+- **Creator FAQs added:**
+  - Revenue share (70% of net revenue, monthly payouts)
+  - Content upload process (AI transforms content into micro-lessons)
+  - Content ownership (creator retains IP)
+  - Payout timing (monthly, $50 minimum)
+- **Learner FAQs added:**
+  - Subscription pricing (flexible plans, unlimited access)
+  - Lesson format (5-10 minute micro-lessons)
+  - Launch timeline (coming soon, join waitlist)
+  - Early access benefits (founding member pricing, beta features)
+- **Learnings for future iterations:**
+  - FAQ grid shows first 4 items, then heading, then items 5-8
+  - Both mobile (accordion) and desktop (grid) layouts use same faqItems array
+  - Answers should be concise (1-3 sentences) for grid display
+  - Include calls-to-action where appropriate (e.g., "Check our pricing page")
 ---
 
-## 2026-01-30 - US-004: Create features grid section
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/dojo-features.tsx (new)
-  - app/(marketing)/page.tsx (updated import)
-- **What was implemented**:
-  - Created DojoFeaturesSection component with 6 Dojo-specific features
-  - Features: Universal Scaffolding, Feed-to-Mastery Funnel, AI-Powered Repurposing, Peer-Reviewed Discovery, Native Monetization, Low-Friction Mastery
-  - Section headline: "The First Marketplace Powered By Cognitive Scaffolding"
-  - Responsive grid: grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 (1x6 mobile, 2x3 tablet, 3x2 desktop)
-  - Each card has: lucide-react icon, title, description, dojo-card styling with hover glow
-  - Scroll-triggered animations using useInView with staggered reveal (staggerChildren: 0.1)
-  - Hover effects: y:-8 lift, border color change to --dojo-border-accent, subtle inset shadow
-- **Learnings for future iterations**:
-  - lucide-react provides good icons for features: Layers, Compass, Sparkles, Users, DollarSign, Zap
-  - Use useInView({ once: true, amount: 0.2 }) for scroll-triggered animations
-  - containerVariants/itemVariants pattern for staggered animations works well
-  - Hover glow overlay pattern: absolute positioned div with opacity transition
-  - The old marketing-features.tsx is still in the codebase but no longer used on homepage
-  - Build fails due to missing POLAR_WEBHOOK_SECRET but typecheck and lint pass
-
+## 2026-01-31 13:00 - US-006
+- What was implemented: Replaced developer testimonials with creator-focused quotes
+- Files changed:
+  - `app/(marketing)/marketing-testimonial.tsx`: Replaced 13 fake developer testimonials with 10 creator quotes
+- **Changes made:**
+  - New heading: "What Creators Are Saying" (was "Customers")
+  - Each quote has: name, niche tag (e.g., "Fitness Creator"), and creator-relevant quote
+  - Topics covered: revenue share excitement, AI content transformation, ownership retention, passive income, micro-lesson format
+  - Creator niches: Fitness, Photography, Culinary, Music, Language, Business, Writing, Design, Yoga, Developer Education
+- **Learnings for future iterations:**
+  - Username field can include niche tag (e.g., "@handle • Fitness Creator")
+  - Reviews array is split in half for two marquee rows (firstRow, secondRow)
+  - Images come from `/tweet-avatars/` directory - reuse existing images
+  - Keep quotes under 150 characters for good card display
 ---
 
-## 2026-01-30 - US-005: Build How It Works visual flow section
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/how-it-works-section.tsx (new)
-  - app/(marketing)/page.tsx (updated import)
-- **What was implemented**:
-  - Created HowItWorksSection component with three-step visual flow
-  - Input column: YouTube, Course Videos, Podcasts with icons
-  - Dojo Engine column (center): Semantic Segmentation, Pedagogical Labeling, Synthesis Optimization
-  - Output column: Sample micro-lesson card with video thumbnail, duration badge, quiz indicator
-  - Animated arrows between sections using motion.div with x/y oscillation
-  - Connecting lines between process steps using gradient borders
-  - Desktop layout: Horizontal flow with flexbox (3 columns)
-  - Mobile layout: Vertical flow with centered elements
-  - Dark background with glowing radial gradient centered on Dojo Engine
-  - Scroll-triggered animations using useInView with staggered reveal
-- **Learnings for future iterations**:
-  - Use hidden lg:flex / lg:hidden pattern for responsive desktop/mobile layouts
-  - Animated arrows: motion.div with animate={{ x: [0, 8, 0] }} and repeat: Infinity
-  - For vertical mobile arrows, use rotate-90 on ArrowRight icon
-  - Sample lesson card pattern: aspect-video container with Play button overlay
-  - Connecting lines between steps: absolute positioned div with gradient background
-  - lucide-react icons for content types: Video, FileVideo, Podcast
-
+## 2026-01-31 13:15 - US-007
+- What was implemented: URL parameter tracking for audience mode
+- Files changed:
+  - `app/(marketing)/marketing-hero.tsx`: Added useSearchParams and useRouter for URL param tracking
+- **Implementation details:**
+  - Reads `?mode=creator` or `?mode=learner` from URL
+  - Defaults to "learner" when no param or invalid value
+  - Toggle updates URL using shallow routing (no page reload)
+  - Exported `AudienceType` type for use by other components
+- **Learnings for future iterations:**
+  - Use `useSearchParams()` from 'next/navigation' to read URL params
+  - Use `router.replace()` with `{ scroll: false }` for shallow routing without scroll
+  - Create new URLSearchParams from existing params to preserve other query strings
+  - useEffect syncs state when URL changes externally (browser back/forward)
 ---
 
-## 2026-01-30 - US-006: Create competitive differentiation section
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/why-dojo-section.tsx (new)
-  - app/(marketing)/page.tsx (updated import)
-- **What was implemented**:
-  - Created WhyDojoSection component with "Why Dojo?" headline
-  - 4 competitor comparison cards: Skillshare/Udemy, Duolingo, TikTok, MasterClass
-  - Each card shows: competitor icon, name, what they do well (italicized quote), arrow divider, and 3 bullet points of what Dojo adds
-  - Responsive grid: grid-cols-1 md:grid-cols-2 (2x2 on desktop, 1x4 on mobile)
-  - Scroll-triggered staggered animations using useInView and motion variants
-  - Hover effects: y:-6 lift, border glow with --dojo-border-accent
-  - Icons from lucide-react: GraduationCap, Gamepad2, MonitorPlay, Star
-  - Divider between "they do well" and "Dojo adds" uses ArrowRight icon
-- **Learnings for future iterations**:
-  - Competitor comparison pattern: italicized quote for their strength, bullet points for Dojo's additions
-  - Use &ldquo; and &rdquo; for proper curly quotes in JSX
-  - ArrowRight with text in a divider pattern: flex-1 h-px + icon + text + flex-1 h-px
-  - Consistent card pattern from DojoFeaturesSection works well across sections
-
+## 2026-01-31 13:30 - US-008
+- What was implemented: Dynamic stats section in hero based on audience mode
+- Files changed:
+  - `app/(marketing)/marketing-hero.tsx`: Made socialProofStats an object with creator/learner arrays
+- **Implementation details:**
+  - Hero already had dynamic headline, subheadline, and CTA per mode
+  - Made socialProofStats object with creator/learner keys
+  - Creator stats: 70% Revenue Share, 10K+ Creators Interested, Monthly Payout Schedule, AI Lesson Structuring
+  - Learner stats: 5min Average Lesson, 100+ Topics Available, 3x Better Retention, AI Personalized Paths
+  - Added AnimatePresence wrapper for smooth stat transitions
+- **Learnings for future iterations:**
+  - Convert arrays to objects with mode keys for mode-dependent data: `{ creator: [...], learner: [...] }`
+  - Wrap mode-dependent content in AnimatePresence for smooth transitions
+  - Use `key={audience}` on motion.div to trigger exit/enter animations
 ---
 
-## 2026-01-30 - US-007: Build creator application form section
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/creator-application-section.tsx (new)
-  - lib/db/actions.ts (updated - added submitCreatorApplication action)
-  - supabase/migrations/20260130100000_creator_applications.sql (new)
-  - app/(marketing)/page.tsx (updated import)
-- **What was implemented**:
-  - Created CreatorApplicationSection component with full form
-  - Form fields: Full Name, Email, Content Niche (dropdown), Social Profile Link, Monthly Audience Size
-  - Client-side validation with error states per field
-  - Server action submitCreatorApplication with email validation and duplicate check
-  - Success state with animated transition and CheckCircle icon
-  - Error state with banner showing error message
-  - Supabase migration creates creator_applications table with RLS policy for anonymous inserts
-  - Section added to homepage after WhyDojoSection
-- **Learnings for future iterations**:
-  - Use native select element with custom styling (no shadcn Select component in codebase)
-  - selectStyles constant for consistent select styling matching Input component
-  - Form state machine pattern: "idle" | "submitting" | "success" | "error"
-  - AnimatePresence mode="wait" for smooth form/success state transitions
-  - Server action types exported alongside functions: CreatorApplicationFormData, CreatorApplicationResult
-  - RLS policy for anonymous inserts: `with check (true)` allows any insert
-  - Supabase error code "23505" indicates unique constraint violation (duplicate email)
-
+## 2026-01-31 13:45 - US-009
+- What was implemented: Dynamic features section based on audience mode
+- Files changed:
+  - `app/(marketing)/dojo-features.tsx`: Converted features array to object with creator/learner keys
+- **Creator features (6):**
+  - 70% Revenue Share, AI Lesson Structuring, Reach Hungry Learners
+  - Simple Content Upload, Analytics Dashboard, Keep Your IP
+- **Learner features (6):**
+  - 5-Minute Micro-Lessons, Real Practitioners, Structured Learning Paths
+  - Swipe-to-Learn Feed, 3x Better Retention, 100+ Topics
+- **Learnings for future iterations:**
+  - Import AudienceType from marketing-hero.tsx for type consistency
+  - Each section can read mode from URL params independently (no prop drilling needed)
+  - Added new icons: Upload, TrendingUp, Clock, BookOpen, Target, Award
 ---
 
-## 2026-01-30 - US-008: Build learner waitlist form section
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/learner-waitlist-section.tsx (new)
-  - lib/db/actions.ts (updated - added submitLearnerWaitlist action)
-  - supabase/migrations/20260130110000_learner_waitlist.sql (new)
-  - app/(marketing)/page.tsx (updated import)
-- **What was implemented**:
-  - Created LearnerWaitlistSection component with "Get Early Access" headline
-  - Form fields: Email (required), Name (optional), Interests multi-select
-  - Interests shown as toggle buttons: Fitness & Health, Music & Audio, Beauty & Makeup, Other
-  - Client-side validation for email and interests (at least one required)
-  - Server action submitLearnerWaitlist with email validation and duplicate check
-  - Success state with animated transition and "You're on the List!" message
-  - Error state with banner showing error message
-  - Supabase migration creates learner_waitlist table with email unique constraint
-  - RLS policy for anonymous inserts, indexes on email and created_at
-  - Section added to homepage after CreatorApplicationSection
-- **Learnings for future iterations**:
-  - Multi-select pattern: Use toggle buttons instead of checkboxes for cleaner mobile UX
-  - Store arrays in Postgres: Use `text[]` type in schema, pass array directly to insert
-  - Interests field validation: Check array length > 0 for required multi-select
-  - Toggle button styling: Use conditional classes based on isSelected state
-  - Optional fields: Use `?.trim() || null` pattern to convert empty strings to null
-  - Section placement: Learner waitlist after creator application maintains natural flow
-
+## 2026-01-31 14:00 - US-010
+- What was implemented: Dynamic Why Dojo section based on audience mode
+- Files changed:
+  - `app/(marketing)/why-dojo-section.tsx`: Converted competitors array to object with creator/learner content, added AnimatePresence
+- **Creator mode comparisons (4):**
+  - YouTube: 70% revenue share vs YouTube's ~55%, paid subscribers, no algorithm chase
+  - Skillshare: Keep IP ownership, AI handles structure, transparent earnings
+  - Patreon: AI transforms content, built-in learning tools, reach active learners
+  - Teachable: Built-in discovery, AI production, marketplace exposure
+- **Learner mode comparisons (4):**
+  - Skillshare/Udemy: AI transforms to micro-lessons, 5min vs 5hrs, no 2x speed
+  - Duolingo: Real practitioner knowledge, any skill not just languages
+  - TikTok/Shorts: Structured paths, progressive learning, 3x retention
+  - MasterClass: Learn from practitioners, interactive exercises, affordable
+- **Learnings for future iterations:**
+  - File had pre-existing mode implementation but with a syntax error (missing AnimatePresence closing tag)
+  - Always run lint to catch JSX tag mismatches before committing
+  - Added new icons: Youtube, DollarSign (for Teachable comparison)
 ---
 
-## 2026-01-30 - US-009: Create dedicated For Creators page
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/for-creators/page.tsx (new)
-- **What was implemented**:
-  - Created /for-creators route as a client component page
-  - Hero section with "Turn Your Expertise Into Scalable Income" headline and badge
-  - Animated background gradient effects and glow orbs matching homepage hero
-  - CTA buttons: "Apply Now" (links to #apply) and "See How It Works" (links to /how-it-works)
-  - Value props section with 4 cards: 70% Revenue Share, AI Handles Course Structure, 10K+ Learners Through Feed, Real-Time Analytics Dashboard
-  - "The Creator Struggle" problem statement section with 4 pain points: Hours of Editing, Algorithm Anxiety, Revenue Uncertainty, Burnout Cycle
-  - "The Dojo Solution" teaser with cyan accent styling
-  - Embedded CreatorApplicationSection component at bottom with FadeIn wrapper
-  - Scroll-triggered animations using useInView with staggered reveals
-  - Hover effects on cards: y-lift, border glow with --dojo-border-accent
-- **Learnings for future iterations**:
-  - Dedicated pages can reuse existing section components (CreatorApplicationSection) with FadeIn wrapper
-  - Badge pattern: inline-flex with gap, rounded-full, bg-[var(--dojo-cyan-muted)] for "For Creators" type badges
-  - Problem statement pattern: Use destructive color variants (bg-destructive/10, text-destructive) for pain points
-  - Solution teaser pattern: Follow problem with cyan-accented solution preview to create contrast
-  - Page follows same animation patterns as homepage: useInView with once: true, amount: 0.2
-
+## 2026-01-31 14:15 - US-011
+- What was implemented: Dynamic How It Works section based on audience mode
+- Files changed:
+  - `app/(marketing)/how-it-works-section.tsx`: Converted static flow to dynamic creatorFlow/learnerFlow objects
+- **Creator flow (Upload → AI → Monetization):**
+  - Input: YouTube Videos, Course Material, Podcast Episodes
+  - Process (Dojo Engine): Smart Segmentation, Auto-Structure, Engagement Boost
+  - Output: Passive Income card showing subscribers (1,247) and monthly revenue ($2,840)
+- **Learner flow (Discover → Learn → Master):**
+  - Input: Browse Topics, Set Goals, Choose Path
+  - Process (Personalized Learning): Smart Matching, Bite-Sized Delivery, Adaptive Pacing
+  - Output: Skill Mastery card showing progress (78%) and streak (12 days)
+- **Learnings for future iterations:**
+  - Remove unused imports (Play, Clock, CheckCircle, Upload) to avoid lint warnings
+  - Each flow can have different output card designs - creator shows revenue, learner shows progress
+  - Section subheading also changes dynamically to match the audience focus
+  - Icons added: Compass, Target, Award, Zap for learner flow; DollarSign, TrendingUp for creator flow
 ---
 
-## 2026-01-30 - US-010: Create dedicated For Learners page
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/for-learners/page.tsx (new)
-- **What was implemented**:
-  - Created /for-learners route as a client component page
-  - Hero section with "Master Any Skill, One Swipe at a Time" headline and badge
-  - Animated background gradient effects and glow orbs matching homepage/for-creators hero
-  - CTA buttons: "Join the Waitlist" (links to #waitlist) and "See How It Works" (links to /how-it-works)
-  - Value props section with 4 cards: Bite-Sized Micro-Lessons (3 min), Learn From Practitioners (Real), Peer Reviewed Quality, Free Path to Mastery
-  - "The Consumer Struggle" problem statement section with 4 pain points: Overwhelming Courses, Information Overload, Endless Scrolling, No Real Progress
-  - "The Dojo Solution" teaser with cyan accent styling: "Swipe. Learn. Master."
-  - Embedded LearnerWaitlistSection component at bottom with FadeIn wrapper
-  - Scroll-triggered animations using useInView with staggered reveals
-- **Learnings for future iterations**:
-  - When importing lucide-react icons that share names with JS globals (like `Infinity`), use alias: `import { Infinity as InfinityIcon }` to avoid TypeScript conflicts with `repeat: Infinity` in motion animations
-  - For Learners page follows same structure as For Creators: Hero → Value Props → Problem Statement → Solution Teaser → Form
-  - Consumer struggles focus on content consumption issues vs Creator struggles focusing on production issues
-  - Browser verification blocked by missing .env.local (Supabase credentials) - site-wide issue not specific to this page
-
+## 2026-01-31 14:30 - US-012
+- What was implemented: Cross-promotion CTAs in both Creator and Learner forms
+- Files changed:
+  - `app/(marketing)/creator-application-section.tsx`: Added "Learner? Join Waitlist!" CTA section
+  - `app/(marketing)/learner-waitlist-section.tsx`: Added "Creator? Apply Now!" CTA section
+- **Implementation details:**
+  - Each CTA appears below the privacy note with a separator border
+  - Creator form: Sparkles icon + "Learner? Join Waitlist!" button
+  - Learner form: Send icon + "Creator? Apply Now!" button
+  - Clicking updates URL mode param and scrolls to target form (#waitlist or #apply)
+  - Uses outline button variant with cyan hover effects (border + background)
+- **Learnings for future iterations:**
+  - Use `useRouter` and `useSearchParams` for mode switching with URL param updates
+  - `router.push()` with `{ scroll: false }` prevents automatic scroll, then use `setTimeout` + `scrollIntoView` for custom scroll behavior
+  - Cross-promo text uses "Want to [learn/teach] instead?" pattern for clarity
+  - Keep form IDs consistent (#apply for creator, #waitlist for learner) for anchor navigation
 ---
 
-## 2026-01-30 - US-011: Create How It Works page
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/how-it-works/page.tsx (new)
-- **What was implemented**:
-  - Created /how-it-works route as a client component page
-  - Hero section with "The Dojo Platform" headline and badge
-  - The Dojo Engine section: Reused visual flow pattern (Input → Engine → Output) from homepage how-it-works-section.tsx
-    - Input: YouTube, Course Videos, Podcasts
-    - Engine: Semantic Segmentation, Pedagogical Labeling, Synthesis Optimization
-    - Output: Sample micro-lesson card
-  - For Creators flow section: 4-step journey with connector lines between steps
-    - Steps: Upload Your Content → AI Transforms It → Learners Discover You → Earn Passively
-  - For Learners flow section: 4-step journey with connector lines between steps
-    - Steps: Discover Content → Learn in Minutes → Reinforce Knowledge → Track Mastery
-  - The Marketplace Loop section: Circular flywheel diagram with animated SVG arrows
-    - Desktop: Circular layout with center "dojo" logo and rotating dashed ring
-    - Mobile: Vertical list with connecting arrows
-    - Loop elements: Creators Upload → Dojo Transforms → Learners Discover → Everyone Wins
-  - CTA section with dual buttons: "Apply as Creator" and "Join as Learner"
-  - All sections have scroll-triggered animations using useInView
-- **Learnings for future iterations**:
-  - Circular layout pattern: Use absolute positioning with percentage-based positions for circular arrangements
-  - SVG animated paths: Use motion.path with pathLength animation for drawing arrow effects
-  - Step connector lines: Use absolute positioned divs with gradient backgrounds for desktop flow connections
-  - Number badge pattern: Large opacity-30 text behind icon creates depth effect
-  - Flywheel/loop diagram: Desktop uses circular SVG layout, mobile falls back to simple vertical list
-  - Reuse existing visual patterns (like Dojo Engine flow) by extracting data arrays
-
+## 2026-01-31 14:45 - Suspense Boundary Fix
+- What was implemented: Added Suspense boundaries to fix Next.js 15 build errors
+- Files changed:
+  - `app/(marketing)/page.tsx`: Wrapped Hero, Features, How It Works, Why Dojo, Application/Waitlist sections in Suspense
+  - `app/(marketing)/for-creators/page.tsx`: Wrapped CreatorApplicationSection in Suspense
+  - `app/(marketing)/for-learners/page.tsx`: Wrapped LearnerWaitlistSection in Suspense
+- **Learnings for future iterations:**
+  - Next.js 15 requires Suspense boundaries around components using `useSearchParams()` for static generation
+  - Error message: "useSearchParams() should be wrapped in a suspense boundary"
+  - Import Suspense from 'react', wrap client components that use useSearchParams
+  - This affects all pages that embed components reading URL params
 ---
 
-## 2026-01-30 - US-012: Update About page with founder info
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/about/page.tsx (updated)
-- **What was implemented**:
-  - Redesigned About page to match Dojo branding and other marketing pages
-  - Hero section with "Building the Future of Learning" headline and animated glow orbs
-  - Our Mission section with highlighted keywords (cognitive science, AI technology, creator economics)
-  - Meet the Founder section: Jack Modesett bio with Ares Capital, InSite Property Group, UCSB background
-    - Left column: Founder bio card with JM avatar placeholder, name, title, and detailed background
-    - Right column: 3 experience cards (Ares Capital, InSite Property Group, UC Santa Barbara)
-  - Founder-Market Fit section with badge, 3 advantage cards (Creator Network, Learning Obsession, Marketplace Experience), and founder quote
-  - Our Values section: 4 value cards (Innovation, Accessibility, Creator Empowerment, Excellence)
-  - Get in Touch contact section: email link (hello@joindojo.co) and social icons (Twitter/X, LinkedIn)
-  - Removed placeholder team members in favor of founder-focused narrative
-  - All sections use scroll-triggered animations with useInView pattern
-- **Learnings for future iterations**:
-  - About pages benefit from founder-focused narrative in early-stage companies
-  - Blockquote pattern: Large opacity-30 quote mark + italic text + footer with name
-  - Avatar placeholder pattern: Initials in cyan-muted circle when no photo available
-  - Two-column layout: Bio card left + stacked experience cards right creates visual hierarchy
-  - Highlighted keywords in mission statements: `<span className="text-[var(--dojo-cyan)] font-medium">keyword</span>`
-
+## 2026-01-31 15:00 - US-013
+- What was implemented: Added Pricing link to main navigation
+- Files changed:
+  - `app/(marketing)/marketing-navbar.tsx`: Added Pricing to navItems array between For Learners and About
+- **Implementation details:**
+  - navItems array is shared between desktop and mobile menu, so one change affects both
+  - Order: How It Works → For Creators → For Learners → Pricing → About
+  - Link href: /pricing
+  - Active state detection uses same isActive() helper that checks pathname.startsWith()
+- **Learnings for future iterations:**
+  - Navigation links are managed in a single navItems array for consistency
+  - Both desktop nav (lg:flex) and mobile Sheet use same navItems.map() pattern
+  - Adding a nav item requires only one line change in the array
 ---
 
-## 2026-01-30 - US-013: Build marketing footer
-- **Status**: Completed
-- **Files**:
-  - app/(marketing)/marketing-footer.tsx (updated)
-- **What was implemented**:
-  - Updated existing marketing footer component to match acceptance criteria
-  - Three navigation columns: Product (How It Works, For Creators, For Learners), Company (About, Blog), Legal (Terms, Privacy)
-  - Social links: Twitter/X and LinkedIn (replaced GitHub)
-  - Login link added to copyright section (bottom right)
-  - Improved responsive grid layout: 2-col mobile, 6-col desktop with proper spacing
-  - Styling updated: uppercase/tracking-wider column headers, cyan hover states, consistent text opacity
-  - Social icons moved to brand section for better visual hierarchy
-- **Learnings for future iterations**:
-  - Footer was partially implemented - always check existing component state before creating new
-  - Grid pattern: Use col-span-2 for brand section to give it more presence
-  - Empty spacing column pattern: `<div className="hidden md:block" />` for desktop-only spacing
-  - Footer link styling: text-sm text-foreground/60 hover:text-[var(--dojo-cyan)] for consistent hover
-  - Social icons in brand section create better visual hierarchy than separate column
-  - Browser verification blocked by missing Supabase env vars (site-wide issue)
-
----
-
-## 2026-01-30 - US-014: Create Supabase tables for form submissions
-- **Status**: Completed (verified - tables already exist)
-- **Files verified**:
-  - supabase/migrations/20260130100000_creator_applications.sql
-  - supabase/migrations/20260130110000_learner_waitlist.sql
-- **What was verified**:
-  - creator_applications table: id (uuid), created_at, name, email, niche, social_link, audience_size, status (enum)
-  - learner_waitlist table: id (uuid), created_at, email, name, interests (text[])
-  - Both tables have `email text not null unique` constraint
-  - Both tables have RLS enabled with `with check (true)` policies for anonymous inserts
-  - Indexes on email and created_at columns
-  - Typecheck passes
-- **Learnings for future iterations**:
-  - This story was essentially documentation/verification - the work was done in US-007 and US-008
-  - Future PRDs should link dependent stories or mark as "completed by" when work is done elsewhere
-  - When creating forms, create the table migration in the same story to avoid orphaned verification stories
-
----
-
-## 2026-01-30 - US-015: Add page transitions and micro-interactions
-- **Status**: Completed
-- **Files**:
-  - components/page-transition.tsx (new)
-  - components/smooth-scroll.tsx (new)
-  - app/globals.css (updated)
-  - app/(marketing)/layout.tsx (updated)
-- **What was implemented**:
-  - Created PageTransition component with AnimatePresence for route change animations
-    - Fade-in/out with subtle y-axis movement
-    - Uses useReducedMotion hook to respect user preferences
-  - Created SmoothScroll component for anchor link smooth scrolling
-    - 80px header offset for sticky navbar
-    - Updates browser history without triggering scroll
-    - Uses native scrollTo with smooth/auto behavior based on motion preference
-  - Enhanced dojo-btn-primary CSS:
-    - Added ::before pseudo-element for subtle shine overlay on hover
-    - Added translateY(-1px) lift effect on hover
-    - Enhanced glow shadow on hover: box-shadow with 20px + 4px layers
-    - Added active state with translateY(0) for press feedback
-  - Enhanced dojo-btn-secondary CSS:
-    - Added cyan glow shadow on hover
-    - Added translateY(-1px) lift effect on hover
-    - Added active state for press feedback
-  - Added comprehensive prefers-reduced-motion CSS:
-    - Disables all animations and transitions globally
-    - Removes transform effects from buttons
-    - Sets scroll-behavior to auto
-  - Added smooth scroll behavior to html element with prefers-reduced-motion fallback
-  - Integrated SmoothScroll component into marketing layout
-- **Learnings for future iterations**:
-  - Existing FadeIn component already handles scroll-triggered section animations with useReducedMotion
-  - Existing dojo-card class already has hover glow effects
-  - PageTransition uses usePathname as key for AnimatePresence route detection
-  - SmoothScroll uses event delegation on document for all anchor links
-  - CSS prefers-reduced-motion should be comprehensive: cover *, ::before, ::after plus specific class overrides
-  - Button hover glow pattern: combine box-shadow with translateY for depth effect
-
----
-
-## 2026-01-30 - US-016: Implement responsive design across all pages
-- **Status**: Completed
-- **Files**:
-  - components/ui/button.tsx (updated)
-  - components/ui/input.tsx (updated)
-  - app/(marketing)/creator-application-section.tsx (updated)
-  - app/(marketing)/learner-waitlist-section.tsx (updated)
-  - app/(marketing)/marketing-hero.tsx (updated)
-  - app/(marketing)/marketing-footer.tsx (updated)
-  - app/(marketing)/for-creators/page.tsx (updated)
-  - app/(marketing)/for-learners/page.tsx (updated)
-  - app/(marketing)/how-it-works/page.tsx (updated)
-  - app/(marketing)/about/page.tsx (updated)
-- **What was implemented**:
-  - Updated button.tsx touch targets: h-9→h-10 (default), h-8→h-9 (sm), h-10→h-11 (lg), size-9→size-10 (icon)
-  - Updated input.tsx touch target: h-9→h-11 for proper 44px minimum height
-  - Updated select styles in creator-application-section.tsx: h-9→h-11
-  - Updated interest toggle buttons in learner-waitlist-section.tsx: added min-h-[44px] and py-2.5 padding
-  - Fixed glow orb overflow on mobile: added `hidden md:block` to all animated glow orbs across:
-    - marketing-hero.tsx (2 orbs)
-    - for-creators/page.tsx (2 orbs)
-    - for-learners/page.tsx (2 orbs)
-    - how-it-works/page.tsx (1 orb)
-    - about/page.tsx (1 orb)
-  - Updated footer grid for 320px screens: changed grid-cols-2 to grid-cols-1 sm:grid-cols-2
-  - TypeScript and ESLint pass (pre-existing warnings in unrelated dashboard components)
-- **Learnings for future iterations**:
-  - 44px minimum touch target is WCAG AA requirement - always use h-10/h-11 for interactive elements
-  - Absolutely positioned elements with percentage-based positions (right-[15%], left-[10%]) can cause horizontal overflow on mobile - hide with `hidden md:block`
-  - Footer grid on 320px screens needs grid-cols-1 to prevent text truncation
-  - Pre-existing SSR issue with localStorage.getItem prevents browser verification - not related to CSS changes
-  - Responsive classes already present throughout marketing pages: sm:, md:, lg: breakpoints used correctly
-
+## 2026-01-31 12:49 - US-014
+- What was implemented: Created micro-learning science blog post, removed Vibe Marketing post
+- Files changed:
+  - `app/(marketing)/blog/posts/why-micro-learning-works.mdx`: NEW - "Why Micro-Learning Works: The Science Behind Dojo"
+  - `app/(marketing)/blog/posts/example.mdx`: DELETED - Old "Vibe Marketing" post
+- **Content added:**
+  - Cognitive Load Theory (John Sweller) - why information overload hurts learning
+  - Spacing Effect (Ebbinghaus) - why spaced repetition beats cramming
+  - Active Recall - why practice beats passive consumption
+  - Practitioner-based learning - why real experts teach better than academics
+  - 3x retention advantage claim from combining these principles
+- **Learnings for future iterations:**
+  - Blog posts are MDX files in `app/(marketing)/blog/posts/[slug].mdx`
+  - Slug is derived from filename (why-micro-learning-works.mdx → /blog/why-micro-learning-works)
+  - Frontmatter requires: title, publishedAt, category, description, summary
+  - Build output shows which blog posts are being generated (good verification)
+  - Use quotes with shell paths containing parentheses: `"app/(marketing)/..."`
 ---

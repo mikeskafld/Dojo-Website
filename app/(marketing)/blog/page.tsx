@@ -4,8 +4,9 @@ import { SectionCard } from "@/components/section-card"
 import { BlogPosts } from "@/app/(marketing)/blog/blog-posts"
 
 export const metadata = {
-  title: "Blog",
-  description: "Read my latest thoughts and insights.",
+  title: "Blog | Dojo",
+  description:
+    "Insights on micro-learning, the creator economy, and building skills that matter.",
 }
 
 export default function BlogPage() {

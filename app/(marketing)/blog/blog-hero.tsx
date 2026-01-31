@@ -38,7 +38,7 @@ export function BlogHero() {
         }}
         className="text-lg text-neutral-600 dark:text-neutral-400"
       >
-        Thoughts, stories and ideas.
+        Insights on learning, creating, and building skills that matter.
       </motion.p>
     </motion.div>
   )

@@ -1,0 +1,34 @@
+## Codebase Patterns
+- This is a Next.js 15 project with React 19
+- Uses Tailwind CSS v4 with @tailwindcss/postcss
+- Marketing pages are in app/(marketing)/ route group
+- Authenticated pages are in app/(authenticated)/ route group
+- Uses Supabase for backend (auth + database)
+- Uses Radix UI for accessible components
+- Uses 'motion' library (Framer Motion) for animations
+- Existing components in /components/ui/ follow shadcn/ui patterns
+- Dojo design system: Use CSS vars (--dojo-cyan, --dojo-bg) and utility classes (dojo-card, dojo-btn-primary)
+- Animation patterns: layoutId for toggle animations, AnimatePresence mode="wait" for content swaps
+- Use GlowEffect and Magnetic components from /components/ for interactive buttons
+- Form submissions: Use server actions in lib/db/actions.ts with exported types (e.g., FormData, Result types)
+- Supabase RLS for anonymous inserts: Use `with check (true)` policy
+- No shadcn Select component - use native select with custom styling matching Input component
+- Lucide icons with JS global names (e.g., `Infinity`) must be aliased: `import { Infinity as InfinityIcon }` to avoid TypeScript conflicts with `repeat: Infinity` in animations
+- Polar integration: getPolarProducts() in lib/polar.ts, checkout route at app/(authenticated)/checkout/route.ts
+- Blog posts use MDX format in app/(marketing)/blog/posts/
+- Terms page at app/(marketing)/terms/page.tsx - currently contains template "Vibe Marketing" content
+- Privacy page likely also contains template content
+- FAQ component at app/(marketing)/marketing-faq.tsx
+- Testimonial component at app/(marketing)/marketing-testimonial.tsx
+- Homepage hero already has audience toggle but only affects hero section (not full page like Trybe)
+
+---
+
+# Progress Log
+
+## Project Initialized - Website Improvements
+- PRD created with 15 user stories
+- Focus: Fix broken functionality + Trybe-style dynamic dual-audience targeting + prepayment validation
+- Previous ralph run archived to archive/2026-01-31-marketing-site-redesign/
+
+---

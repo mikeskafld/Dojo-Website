@@ -1,61 +1,116 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "motion/react"
+import { useSearchParams } from "next/navigation"
+import { motion, useInView, AnimatePresence } from "motion/react"
 import {
   GraduationCap,
   Gamepad2,
   MonitorPlay,
   Star,
   ArrowRight,
+  Youtube,
+  DollarSign,
 } from "lucide-react"
 
-const competitors = [
-  {
-    icon: GraduationCap,
-    name: "Skillshare & Udemy",
-    theyDoWell: "Huge course libraries with expert instructors",
-    dojoAdds: [
-      "AI transforms courses into bite-sized micro-lessons",
-      "Learn in 3 minutes instead of 3 hours",
-      "No more watching at 2x speed to save time",
-    ],
-  },
-  {
-    icon: Gamepad2,
-    name: "Duolingo",
-    theyDoWell: "Gamification that makes learning addictive",
-    dojoAdds: [
-      "Real practitioner knowledge, not just textbook content",
-      "Learn any skill, not just languages",
-      "Peer-reviewed quality from actual experts",
-    ],
-  },
-  {
-    icon: MonitorPlay,
-    name: "TikTok & YouTube Shorts",
-    theyDoWell: "Infinite scroll and viral discovery",
-    dojoAdds: [
-      "Structured learning paths, not random entertainment",
-      "Each swipe builds on the last toward mastery",
-      "Creators get paid fairly (70% revenue share)",
-    ],
-  },
-  {
-    icon: Star,
-    name: "MasterClass",
-    theyDoWell: "Premium production with celebrity instructors",
-    dojoAdds: [
-      "Any creator can monetize their expertise",
-      "AI handles production and course structure",
-      "Interactive quizzes and practice exercises",
-    ],
-  },
-]
+import type { AudienceType } from "./marketing-hero"
+
+const competitors = {
+  creator: [
+    {
+      icon: Youtube,
+      name: "YouTube",
+      theyDoWell: "Massive reach and discovery algorithm",
+      dojoAdds: [
+        "70% revenue share vs YouTube's ~55%",
+        "Subscribers who actually pay for your content",
+        "No need to create endless new content for the algorithm",
+      ],
+    },
+    {
+      icon: GraduationCap,
+      name: "Skillshare",
+      theyDoWell: "Course marketplace with built-in audience",
+      dojoAdds: [
+        "Keep full ownership of your content and IP",
+        "AI handles course structure so you focus on teaching",
+        "Higher revenue share with transparent earnings",
+      ],
+    },
+    {
+      icon: MonitorPlay,
+      name: "Patreon",
+      theyDoWell: "Direct fan support and subscription model",
+      dojoAdds: [
+        "AI transforms your content into structured lessons",
+        "Built-in learning tools (quizzes, progress tracking)",
+        "Reach learners actively seeking your expertise",
+      ],
+    },
+    {
+      icon: DollarSign,
+      name: "Teachable",
+      theyDoWell: "Full control over pricing and branding",
+      dojoAdds: [
+        "No need to build your own audience from scratch",
+        "AI handles production - upload once, earn forever",
+        "Built-in discovery through the Dojo marketplace",
+      ],
+    },
+  ],
+  learner: [
+    {
+      icon: GraduationCap,
+      name: "Skillshare & Udemy",
+      theyDoWell: "Huge course libraries with expert instructors",
+      dojoAdds: [
+        "AI transforms courses into bite-sized micro-lessons",
+        "Learn in 5 minutes instead of 5 hours",
+        "No more watching at 2x speed to save time",
+      ],
+    },
+    {
+      icon: Gamepad2,
+      name: "Duolingo",
+      theyDoWell: "Gamification that makes learning addictive",
+      dojoAdds: [
+        "Real practitioner knowledge, not just textbook content",
+        "Learn any skill, not just languages",
+        "Peer-reviewed quality from actual experts",
+      ],
+    },
+    {
+      icon: MonitorPlay,
+      name: "TikTok & YouTube Shorts",
+      theyDoWell: "Infinite scroll and viral discovery",
+      dojoAdds: [
+        "Structured learning paths, not random entertainment",
+        "Each swipe builds on the last toward mastery",
+        "3x better retention with cognitive scaffolding",
+      ],
+    },
+    {
+      icon: Star,
+      name: "MasterClass",
+      theyDoWell: "Premium production with celebrity instructors",
+      dojoAdds: [
+        "Learn from practitioners who actually do the work",
+        "Interactive quizzes and practice exercises",
+        "Affordable subscription vs expensive one-time fees",
+      ],
+    },
+  ],
+}
 
 export function WhyDojoSection() {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.2 })
+  const searchParams = useSearchParams()
+
+  // Read mode from URL, default to "learner"
+  const modeParam = searchParams.get("mode")
+  const audience: AudienceType = modeParam === "creator" ? "creator" : "learner"
+  const currentCompetitors = competitors[audience]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -109,13 +164,16 @@ export function WhyDojoSection() {
         </motion.div>
 
         {/* Competitor Comparison Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto"
-        >
-          {competitors.map((competitor) => (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={audience}
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            exit={{ opacity: 0, y: -20 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto"
+          >
+            {currentCompetitors.map((competitor) => (
             <motion.div
               key={competitor.name}
               variants={itemVariants}
@@ -180,6 +238,7 @@ export function WhyDojoSection() {
             </motion.div>
           ))}
         </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )

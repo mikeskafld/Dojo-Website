@@ -1,8 +1,9 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { CheckCircle, AlertCircle, Loader2, Sparkles } from "lucide-react"
+import { CheckCircle, AlertCircle, Loader2, Sparkles, Send } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -25,6 +26,8 @@ type FormState = "idle" | "submitting" | "success" | "error"
 export function LearnerWaitlistSection() {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.2 })
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [formState, setFormState] = useState<FormState>("idle")
   const [errorMessage, setErrorMessage] = useState("")
@@ -56,6 +59,21 @@ export function LearnerWaitlistSection() {
     }
 
     return ""
+  }
+
+  const handleSwitchToCreator = () => {
+    // Update URL to creator mode
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("mode", "creator")
+    router.push(`/?${params.toString()}#apply`, { scroll: false })
+
+    // Scroll to apply section after a brief delay for URL update
+    setTimeout(() => {
+      const applySection = document.getElementById("apply")
+      if (applySection) {
+        applySection.scrollIntoView({ behavior: "smooth" })
+      }
+    }, 100)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -325,6 +343,22 @@ export function LearnerWaitlistSection() {
                     By joining, you agree to receive updates about Dojo.
                     We&apos;ll never spam you or share your info.
                   </p>
+
+                  {/* Cross-promotion CTA */}
+                  <div className="pt-4 border-t border-[var(--dojo-border)]">
+                    <p className="text-sm text-center text-[var(--dojo-text-muted)] mb-3">
+                      Want to teach instead?
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full border-[var(--dojo-border)] hover:border-[var(--dojo-cyan)] hover:bg-[var(--dojo-cyan-muted)] transition-colors"
+                      onClick={handleSwitchToCreator}
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Creator? Apply Now!
+                    </Button>
+                  </div>
                 </motion.form>
               )}
             </AnimatePresence>

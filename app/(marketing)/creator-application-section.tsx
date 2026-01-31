@@ -1,8 +1,9 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { motion, useInView, AnimatePresence } from "motion/react"
-import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react"
+import { Send, CheckCircle, AlertCircle, Loader2, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,6 +42,8 @@ type FormState = "idle" | "submitting" | "success" | "error"
 export function CreatorApplicationSection() {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.2 })
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [formState, setFormState] = useState<FormState>("idle")
   const [errorMessage, setErrorMessage] = useState("")
@@ -144,6 +147,21 @@ export function CreatorApplicationSection() {
 
   const selectStyles =
     "flex h-11 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30"
+
+  const handleSwitchToLearner = () => {
+    // Update URL to learner mode
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("mode", "learner")
+    router.push(`/?${params.toString()}#waitlist`, { scroll: false })
+
+    // Scroll to waitlist section after a brief delay for URL update
+    setTimeout(() => {
+      const waitlistSection = document.getElementById("waitlist")
+      if (waitlistSection) {
+        waitlistSection.scrollIntoView({ behavior: "smooth" })
+      }
+    }, 100)
+  }
 
   return (
     <section
@@ -397,6 +415,22 @@ export function CreatorApplicationSection() {
                     By submitting, you agree to our privacy policy. We&apos;ll
                     only use your info to contact you about your application.
                   </p>
+
+                  {/* Cross-promotion CTA */}
+                  <div className="pt-4 border-t border-[var(--dojo-border)]">
+                    <p className="text-sm text-center text-[var(--dojo-text-muted)] mb-3">
+                      Want to learn instead?
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full border-[var(--dojo-border)] hover:border-[var(--dojo-cyan)] hover:bg-[var(--dojo-cyan-muted)] transition-colors"
+                      onClick={handleSwitchToLearner}
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Learner? Join Waitlist!
+                    </Button>
+                  </div>
                 </motion.form>
               )}
             </AnimatePresence>

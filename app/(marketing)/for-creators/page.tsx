@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, Suspense } from "react"
 import { motion, useInView } from "motion/react"
 import {
   ArrowRight,
@@ -342,9 +342,11 @@ export default function ForCreatorsPage() {
       </FadeIn>
 
       {/* Embedded Creator Application Form */}
-      <FadeIn>
-        <CreatorApplicationSection />
-      </FadeIn>
+      <Suspense>
+        <FadeIn>
+          <CreatorApplicationSection />
+        </FadeIn>
+      </Suspense>
     </div>
   )
 }

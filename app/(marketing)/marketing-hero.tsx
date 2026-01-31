@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { ArrowRight, Users, Sparkles, TrendingUp, BookOpen } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 
@@ -8,7 +9,7 @@ import { GlowEffect } from "@/components/bg-glow"
 import { Magnetic } from "@/components/magnetic"
 import Link from "next/link"
 
-type AudienceType = "creator" | "learner"
+export type AudienceType = "creator" | "learner"
 
 const heroContent = {
   creator: {
@@ -25,16 +26,49 @@ const heroContent = {
   },
 }
 
-const socialProofStats = [
-  { value: "70%", label: "Creator Revenue Share", icon: TrendingUp },
-  { value: "3min", label: "Average Lesson Time", icon: BookOpen },
-  { value: "10K+", label: "Creators Interested", icon: Users },
-  { value: "AI", label: "Powered Scaffolding", icon: Sparkles },
-]
+const socialProofStats = {
+  creator: [
+    { value: "70%", label: "Revenue Share", icon: TrendingUp },
+    { value: "10K+", label: "Creators Interested", icon: Users },
+    { value: "Monthly", label: "Payout Schedule", icon: BookOpen },
+    { value: "AI", label: "Lesson Structuring", icon: Sparkles },
+  ],
+  learner: [
+    { value: "5min", label: "Average Lesson", icon: BookOpen },
+    { value: "100+", label: "Topics Available", icon: Users },
+    { value: "3x", label: "Better Retention", icon: TrendingUp },
+    { value: "AI", label: "Personalized Paths", icon: Sparkles },
+  ],
+}
 
 export function LandingHeroSection() {
-  const [audience, setAudience] = useState<AudienceType>("learner")
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  // Read mode from URL, default to "learner"
+  const modeParam = searchParams.get("mode")
+  const initialMode: AudienceType = modeParam === "creator" ? "creator" : "learner"
+
+  const [audience, setAudience] = useState<AudienceType>(initialMode)
   const content = heroContent[audience]
+
+  // Sync state with URL params on mount and when URL changes
+  useEffect(() => {
+    const modeFromUrl = searchParams.get("mode")
+    if (modeFromUrl === "creator" || modeFromUrl === "learner") {
+      setAudience(modeFromUrl)
+    }
+  }, [searchParams])
+
+  // Update URL when audience changes
+  const handleAudienceChange = (newAudience: AudienceType) => {
+    setAudience(newAudience)
+
+    // Update URL with shallow routing (no full page reload)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("mode", newAudience)
+    router.replace(`?${params.toString()}`, { scroll: false })
+  }
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
@@ -81,7 +115,7 @@ export function LandingHeroSection() {
           >
             <div className="inline-flex items-center p-1 rounded-full bg-[var(--dojo-bg-card)] border border-[var(--dojo-border)]">
               <button
-                onClick={() => setAudience("creator")}
+                onClick={() => handleAudienceChange("creator")}
                 className={`relative px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base font-medium rounded-full transition-colors duration-300 ${
                   audience === "creator"
                     ? "text-[var(--dojo-bg)]"
@@ -98,7 +132,7 @@ export function LandingHeroSection() {
                 <span className="relative z-10">I&apos;m a Creator</span>
               </button>
               <button
-                onClick={() => setAudience("learner")}
+                onClick={() => handleAudienceChange("learner")}
                 className={`relative px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base font-medium rounded-full transition-colors duration-300 ${
                   audience === "learner"
                     ? "text-[var(--dojo-bg)]"
@@ -189,34 +223,43 @@ export function LandingHeroSection() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="mt-16 md:mt-24"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
-            {socialProofStats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
-                whileHover={{
-                  y: -4,
-                  transition: { duration: 0.2 }
-                }}
-                className="group relative p-4 md:p-6 rounded-xl dojo-card"
-              >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 dojo-glow-subtle" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={audience}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
+            >
+              {socialProofStats[audience].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  whileHover={{
+                    y: -4,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="group relative p-4 md:p-6 rounded-xl dojo-card"
+                >
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 dojo-glow-subtle" />
 
-                <div className="relative flex flex-col items-center text-center space-y-2">
-                  <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-[var(--dojo-cyan)] mb-1" />
-                  <span className="text-2xl md:text-3xl font-bold text-[var(--dojo-cyan)]">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs md:text-sm text-[var(--dojo-text-muted)]">
-                    {stat.label}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <div className="relative flex flex-col items-center text-center space-y-2">
+                    <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-[var(--dojo-cyan)] mb-1" />
+                    <span className="text-2xl md:text-3xl font-bold text-[var(--dojo-cyan)]">
+                      {stat.value}
+                    </span>
+                    <span className="text-xs md:text-sm text-[var(--dojo-text-muted)]">
+                      {stat.label}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, Suspense } from "react"
 import { motion, useInView } from "motion/react"
 import {
   ArrowRight,
@@ -343,9 +343,11 @@ export default function ForLearnersPage() {
       </FadeIn>
 
       {/* Embedded Learner Waitlist Form */}
-      <FadeIn>
-        <LearnerWaitlistSection />
-      </FadeIn>
+      <Suspense>
+        <FadeIn>
+          <LearnerWaitlistSection />
+        </FadeIn>
+      </Suspense>
     </div>
   )
 }

@@ -113,13 +113,23 @@ export async function getCompleteBillingDetails(): Promise<CompleteBillingDetail
 }
 
 export async function getPolarProducts() {
+  if (!process.env.POLAR_ACCESS_TOKEN) {
+    console.warn(
+      "[getPolarProducts] POLAR_ACCESS_TOKEN not configured - returning empty product list"
+    )
+    return []
+  }
+
   try {
     const { result } = await polarApi.products.list({
       isArchived: false,
     })
     return result.items
   } catch (error) {
-    console.error("Failed to fetch Polar products:", error)
+    console.error(
+      "[getPolarProducts] Failed to fetch products from Polar API:",
+      error instanceof Error ? error.message : error
+    )
     return []
   }
 }

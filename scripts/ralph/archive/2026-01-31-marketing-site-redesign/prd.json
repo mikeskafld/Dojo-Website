@@ -14,8 +14,8 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Implemented warning logs at polar.ts initialization and getPolarProducts() level"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-002",
@@ -30,8 +30,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Rewrote Terms page with 10 sections covering: Acceptance of Terms, Platform Description, Creator Content and Uploads, Creator Revenue Share, Learner Subscriptions, Acceptable Use, Disclaimer of Warranties, Limitation of Liability, Changes to Terms, Contact Information"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
@@ -45,8 +45,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Created Privacy page at app/(marketing)/privacy/page.tsx with 12 sections: Introduction, Information We Collect, Analytics and Tracking, Payment Processing, Content Uploads and AI Processing, How We Use Your Information, Information Sharing, Data Retention, Your Rights, Security, Changes to This Policy, Contact Us"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
@@ -60,8 +60,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Replaced all 8 social media marketing FAQs with Dojo-specific content. Added 4 Creator questions: revenue share (70%), content upload process, content ownership, payout timing"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
@@ -75,8 +75,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Added 4 Learner questions: subscription pricing, lesson format (micro-lessons), launch timeline, early access benefits"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
@@ -91,8 +91,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Replaced 13 developer testimonials with 10 creator quotes. Each has name, handle, and niche (Fitness Creator, Photography Coach, etc.). Changed heading to 'What Creators Are Saying'"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
@@ -106,8 +106,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Updated marketing-hero.tsx to use useSearchParams and useRouter. Toggle now updates URL with ?mode=creator or ?mode=learner. Exported AudienceType for use in other components."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
@@ -122,8 +122,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Hero already had dynamic headlines/CTAs. Made stats section dynamic: Creator stats (revenue share, creators interested, payout schedule, AI structuring) vs Learner stats (lesson time, topics, retention, personalized paths). Added AnimatePresence for smooth transitions."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-009",
@@ -138,8 +138,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": true,
-      "notes": "Features section now reads mode from URL params. Creator features: revenue share, AI structuring, reach learners, simple upload, analytics, IP ownership. Learner features: micro-lessons, practitioners, learning paths, swipe feed, retention, 100+ topics. AnimatePresence for smooth transitions."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-010",
@@ -153,8 +153,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 10,
-      "passes": true,
-      "notes": "Converted competitors array to object with creator/learner keys. Creator mode compares vs YouTube, Skillshare, Patreon, Teachable. Learner mode compares vs Skillshare/Udemy, Duolingo, TikTok/Shorts, MasterClass. Added AnimatePresence for smooth mode transitions."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-011",
@@ -168,8 +168,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 11,
-      "passes": true,
-      "notes": "Created creatorFlow and learnerFlow objects. Creator: YouTube/Course/Podcast input → Dojo Engine (segmentation, auto-structure, engagement) → Passive Income output. Learner: Browse/Goals/Path input → Personalized Learning (matching, delivery, pacing) → Skill Mastery output. AnimatePresence for smooth transitions."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-012",
@@ -184,8 +184,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 12,
-      "passes": true,
-      "notes": "Added cross-promotion CTA sections to both forms. Creator form shows 'Learner? Join Waitlist!' with Sparkles icon. Learner form shows 'Creator? Apply Now!' with Send icon. CTAs use outline button variant with cyan hover effects. Clicking updates URL mode param and scrolls to target form section."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-013",
@@ -199,8 +199,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 13,
-      "passes": true,
-      "notes": "Added Pricing to navItems array between For Learners and About. Both desktop nav and mobile menu use same navItems array, so Pricing appears in both."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-014",
@@ -214,8 +214,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 14,
-      "passes": true,
-      "notes": "Created why-micro-learning-works.mdx covering cognitive load theory, spacing effect, active recall, and practitioner-based learning. Deleted example.mdx (Vibe Marketing post). Build passes with new post at /blog/why-micro-learning-works."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-015",
@@ -230,8 +230,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 15,
-      "passes": true,
-      "notes": "Created creator-economy-future.mdx blog post covering: creator plateau problem, education pivot, barrier to courses, Dojo solution, and call to action"
+      "passes": false,
+      "notes": ""
     }
   ]
 }

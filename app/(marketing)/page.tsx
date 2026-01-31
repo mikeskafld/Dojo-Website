@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { Suspense } from "react"
 
 import { getURL } from "@/lib/utils"
 import { FadeIn } from "@/components/fade-in"
@@ -63,25 +64,37 @@ export const metadata: Metadata = {
 export default async function LandingPage() {
   return (
     <div className="space-y-1 md:space-y-4 ">
-      <LandingHeroSection />
+      <Suspense>
+        <LandingHeroSection />
+      </Suspense>
       <FadeIn>
         <MarketingPartners />
       </FadeIn>
-      <FadeIn>
-        <DojoFeaturesSection />
-      </FadeIn>
-      <FadeIn>
-        <HowItWorksSection />
-      </FadeIn>
-      <FadeIn>
-        <WhyDojoSection />
-      </FadeIn>
-      <FadeIn>
-        <CreatorApplicationSection />
-      </FadeIn>
-      <FadeIn>
-        <LearnerWaitlistSection />
-      </FadeIn>
+      <Suspense>
+        <FadeIn>
+          <DojoFeaturesSection />
+        </FadeIn>
+      </Suspense>
+      <Suspense>
+        <FadeIn>
+          <HowItWorksSection />
+        </FadeIn>
+      </Suspense>
+      <Suspense>
+        <FadeIn>
+          <WhyDojoSection />
+        </FadeIn>
+      </Suspense>
+      <Suspense>
+        <FadeIn>
+          <CreatorApplicationSection />
+        </FadeIn>
+      </Suspense>
+      <Suspense>
+        <FadeIn>
+          <LearnerWaitlistSection />
+        </FadeIn>
+      </Suspense>
       <FadeIn>
         <MarketingQuote />
       </FadeIn>
