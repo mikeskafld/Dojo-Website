@@ -118,3 +118,19 @@ Started: Sat Jan 31 10:39:57 PST 2026
   - Wrap mode-dependent content in AnimatePresence for smooth transitions
   - Use `key={audience}` on motion.div to trigger exit/enter animations
 ---
+
+## 2026-01-31 13:45 - US-009
+- What was implemented: Dynamic features section based on audience mode
+- Files changed:
+  - `app/(marketing)/dojo-features.tsx`: Converted features array to object with creator/learner keys
+- **Creator features (6):**
+  - 70% Revenue Share, AI Lesson Structuring, Reach Hungry Learners
+  - Simple Content Upload, Analytics Dashboard, Keep Your IP
+- **Learner features (6):**
+  - 5-Minute Micro-Lessons, Real Practitioners, Structured Learning Paths
+  - Swipe-to-Learn Feed, 3x Better Retention, 100+ Topics
+- **Learnings for future iterations:**
+  - Import AudienceType from marketing-hero.tsx for type consistency
+  - Each section can read mode from URL params independently (no prop drilling needed)
+  - Added new icons: Upload, TrendingUp, Clock, BookOpen, Target, Award
+---

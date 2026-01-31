@@ -138,8 +138,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Features section now reads mode from URL params. Creator features: revenue share, AI structuring, reach learners, simple upload, analytics, IP ownership. Learner features: micro-lessons, practitioners, learning paths, swipe feed, retention, 100+ topics. AnimatePresence for smooth transitions."
     },
     {
       "id": "US-010",
