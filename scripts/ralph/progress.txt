@@ -317,3 +317,25 @@
   - Highlighted keywords in mission statements: `<span className="text-[var(--dojo-cyan)] font-medium">keyword</span>`
 
 ---
+
+## 2026-01-30 - US-013: Build marketing footer
+- **Status**: Completed
+- **Files**:
+  - app/(marketing)/marketing-footer.tsx (updated)
+- **What was implemented**:
+  - Updated existing marketing footer component to match acceptance criteria
+  - Three navigation columns: Product (How It Works, For Creators, For Learners), Company (About, Blog), Legal (Terms, Privacy)
+  - Social links: Twitter/X and LinkedIn (replaced GitHub)
+  - Login link added to copyright section (bottom right)
+  - Improved responsive grid layout: 2-col mobile, 6-col desktop with proper spacing
+  - Styling updated: uppercase/tracking-wider column headers, cyan hover states, consistent text opacity
+  - Social icons moved to brand section for better visual hierarchy
+- **Learnings for future iterations**:
+  - Footer was partially implemented - always check existing component state before creating new
+  - Grid pattern: Use col-span-2 for brand section to give it more presence
+  - Empty spacing column pattern: `<div className="hidden md:block" />` for desktop-only spacing
+  - Footer link styling: text-sm text-foreground/60 hover:text-[var(--dojo-cyan)] for consistent hover
+  - Social icons in brand section create better visual hierarchy than separate column
+  - Browser verification blocked by missing Supabase env vars (site-wide issue)
+
+---
