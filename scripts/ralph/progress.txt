@@ -9,6 +9,8 @@ Started: Sat Jan 31 10:39:57 PST 2026
 - Environment variables accessed via `process.env.VARIABLE_NAME`
 - New marketing pages: create folder in `app/(marketing)/[page-name]/page.tsx`
 - Footer links to legal pages: `/terms` and `/privacy` routes defined in marketing-footer.tsx
+- URL parameters: use `useSearchParams()` to read, `router.replace()` with `{ scroll: false }` for shallow routing
+- Audience mode: `AudienceType` exported from marketing-hero.tsx, values are "creator" | "learner"
 
 ---
 
@@ -83,4 +85,20 @@ Started: Sat Jan 31 10:39:57 PST 2026
   - Reviews array is split in half for two marquee rows (firstRow, secondRow)
   - Images come from `/tweet-avatars/` directory - reuse existing images
   - Keep quotes under 150 characters for good card display
+---
+
+## 2026-01-31 13:15 - US-007
+- What was implemented: URL parameter tracking for audience mode
+- Files changed:
+  - `app/(marketing)/marketing-hero.tsx`: Added useSearchParams and useRouter for URL param tracking
+- **Implementation details:**
+  - Reads `?mode=creator` or `?mode=learner` from URL
+  - Defaults to "learner" when no param or invalid value
+  - Toggle updates URL using shallow routing (no page reload)
+  - Exported `AudienceType` type for use by other components
+- **Learnings for future iterations:**
+  - Use `useSearchParams()` from 'next/navigation' to read URL params
+  - Use `router.replace()` with `{ scroll: false }` for shallow routing without scroll
+  - Create new URLSearchParams from existing params to preserve other query strings
+  - useEffect syncs state when URL changes externally (browser back/forward)
 ---

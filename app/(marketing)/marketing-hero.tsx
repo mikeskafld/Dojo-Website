@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { ArrowRight, Users, Sparkles, TrendingUp, BookOpen } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 
@@ -8,7 +9,7 @@ import { GlowEffect } from "@/components/bg-glow"
 import { Magnetic } from "@/components/magnetic"
 import Link from "next/link"
 
-type AudienceType = "creator" | "learner"
+export type AudienceType = "creator" | "learner"
 
 const heroContent = {
   creator: {
@@ -33,8 +34,33 @@ const socialProofStats = [
 ]
 
 export function LandingHeroSection() {
-  const [audience, setAudience] = useState<AudienceType>("learner")
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  // Read mode from URL, default to "learner"
+  const modeParam = searchParams.get("mode")
+  const initialMode: AudienceType = modeParam === "creator" ? "creator" : "learner"
+
+  const [audience, setAudience] = useState<AudienceType>(initialMode)
   const content = heroContent[audience]
+
+  // Sync state with URL params on mount and when URL changes
+  useEffect(() => {
+    const modeFromUrl = searchParams.get("mode")
+    if (modeFromUrl === "creator" || modeFromUrl === "learner") {
+      setAudience(modeFromUrl)
+    }
+  }, [searchParams])
+
+  // Update URL when audience changes
+  const handleAudienceChange = (newAudience: AudienceType) => {
+    setAudience(newAudience)
+
+    // Update URL with shallow routing (no full page reload)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("mode", newAudience)
+    router.replace(`?${params.toString()}`, { scroll: false })
+  }
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
@@ -81,7 +107,7 @@ export function LandingHeroSection() {
           >
             <div className="inline-flex items-center p-1 rounded-full bg-[var(--dojo-bg-card)] border border-[var(--dojo-border)]">
               <button
-                onClick={() => setAudience("creator")}
+                onClick={() => handleAudienceChange("creator")}
                 className={`relative px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base font-medium rounded-full transition-colors duration-300 ${
                   audience === "creator"
                     ? "text-[var(--dojo-bg)]"
@@ -98,7 +124,7 @@ export function LandingHeroSection() {
                 <span className="relative z-10">I&apos;m a Creator</span>
               </button>
               <button
-                onClick={() => setAudience("learner")}
+                onClick={() => handleAudienceChange("learner")}
                 className={`relative px-4 py-2 md:px-6 md:py-2.5 text-sm md:text-base font-medium rounded-full transition-colors duration-300 ${
                   audience === "learner"
                     ? "text-[var(--dojo-bg)]"

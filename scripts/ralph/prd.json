@@ -106,8 +106,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Updated marketing-hero.tsx to use useSearchParams and useRouter. Toggle now updates URL with ?mode=creator or ?mode=learner. Exported AudienceType for use in other components."
     },
     {
       "id": "US-008",
