@@ -292,3 +292,28 @@
   - Reuse existing visual patterns (like Dojo Engine flow) by extracting data arrays
 
 ---
+
+## 2026-01-30 - US-012: Update About page with founder info
+- **Status**: Completed
+- **Files**:
+  - app/(marketing)/about/page.tsx (updated)
+- **What was implemented**:
+  - Redesigned About page to match Dojo branding and other marketing pages
+  - Hero section with "Building the Future of Learning" headline and animated glow orbs
+  - Our Mission section with highlighted keywords (cognitive science, AI technology, creator economics)
+  - Meet the Founder section: Jack Modesett bio with Ares Capital, InSite Property Group, UCSB background
+    - Left column: Founder bio card with JM avatar placeholder, name, title, and detailed background
+    - Right column: 3 experience cards (Ares Capital, InSite Property Group, UC Santa Barbara)
+  - Founder-Market Fit section with badge, 3 advantage cards (Creator Network, Learning Obsession, Marketplace Experience), and founder quote
+  - Our Values section: 4 value cards (Innovation, Accessibility, Creator Empowerment, Excellence)
+  - Get in Touch contact section: email link (hello@joindojo.co) and social icons (Twitter/X, LinkedIn)
+  - Removed placeholder team members in favor of founder-focused narrative
+  - All sections use scroll-triggered animations with useInView pattern
+- **Learnings for future iterations**:
+  - About pages benefit from founder-focused narrative in early-stage companies
+  - Blockquote pattern: Large opacity-30 quote mark + italic text + footer with name
+  - Avatar placeholder pattern: Initials in cyan-muted circle when no photo available
+  - Two-column layout: Bio card left + stacked experience cards right creates visual hierarchy
+  - Highlighted keywords in mission statements: `<span className="text-[var(--dojo-cyan)] font-medium">keyword</span>`
+
+---
